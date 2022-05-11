@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sls.view.LoginView">
+   <children>
+      <Label layoutX="73.0" layoutY="35.0" text="OLMC Spiritual Library System">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="120.0" layoutY="144.0" text="Name" />
+      <PasswordField layoutX="261.0" layoutY="217.0" />
+      <TextField layoutX="261.0" layoutY="138.0" />
+      <Label layoutX="120.0" layoutY="223.0" text="Password" />
+      <Button fx:id="loginBtn" layoutX="244.0" layoutY="298.0" mnemonicParsing="false" onAction="#loginAction" text="Log in" />
+      <Button fx:id="exitBtn" layoutX="398.0" layoutY="298.0" mnemonicParsing="false" onAction="#exitAction" text="Exit" />
+   </children>
+</AnchorPane>

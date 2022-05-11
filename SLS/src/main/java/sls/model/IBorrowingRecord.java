@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sls;
+package sls.model;
 
 /**
  *
  * @author Faqiu Sun
  */
-public class SLS {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
+public interface IBorrowingRecord {
     
 }
