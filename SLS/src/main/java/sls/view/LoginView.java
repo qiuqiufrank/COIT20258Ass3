@@ -52,8 +52,9 @@ public class LoginView implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    void bind(LoginPresenter lp){
-        this.lp=lp;
+
+    public void bind(LoginPresenter lp) {
+        this.lp = lp;
     }
 
 }

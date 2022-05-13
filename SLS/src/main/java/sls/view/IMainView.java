@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sls.model;
+package sls.view;
 
 /**
  *
  * @author Faqiu Sun
  */
-public class UserModel implements IUserModel{
-
-    public User findValidUser(String name, String password) {
-        return new User();
-    }
+public interface IMainView {
+    
 }

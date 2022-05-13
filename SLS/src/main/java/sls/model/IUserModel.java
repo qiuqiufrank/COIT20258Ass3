@@ -10,5 +10,6 @@ package sls.model;
  * @author Faqiu Sun
  */
 public interface IUserModel {
-    
+
+    public User findValidUser(String name, String password);
 }
