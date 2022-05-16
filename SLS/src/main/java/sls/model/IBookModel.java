@@ -5,12 +5,14 @@
  */
 package sls.model;
 
+import java.util.List;
+
 /**
  *
  * @author Faqiu Sun
  */
-public enum UserType{
-    Borrower,
-    Librarian,
-    MainLibrarian;
+public interface IBookModel {
+
+    int addNewBook(String title, String author);
+    List<Book> getAllIssuedBooks();
 }

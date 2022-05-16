@@ -8,16 +8,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="667.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sls.view.MainView">
+<AnchorPane id="AnchorPane" prefHeight="628.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sls.view.MainView">
    <children>
-      <TextArea layoutX="5.0" layoutY="5.0" prefHeight="566.0" prefWidth="293.0" />
-      <TabPane layoutX="303.0" layoutY="6.0" prefHeight="646.0" prefWidth="505.0" tabClosingPolicy="UNAVAILABLE">
+      <TextArea fx:id="textArea" layoutX="5.0" layoutY="5.0" prefHeight="622.0" prefWidth="291.0" />
+      <TabPane layoutX="303.0" layoutY="6.0" prefHeight="622.0" prefWidth="505.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Book">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="155.0" prefWidth="261.0">
                      <children>
-                        <GridPane layoutX="15.0" layoutY="196.0" prefHeight="102.0" prefWidth="463.0" style="-fx-border-color: black;">
+                        <GridPane layoutX="15.0" layoutY="358.0" prefHeight="102.0" prefWidth="469.0" style="-fx-border-color: black;">
                            <children>
                               <Button mnemonicParsing="false" text="Issued Books" />
                               <Button mnemonicParsing="false" text="Overdue Returns" GridPane.columnIndex="1" />
@@ -30,12 +30,12 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Label layoutX="29.0" layoutY="183.0" style="-fx-background-color: white;" text="Query All">
+                        <Label layoutX="29.0" layoutY="338.0" style="-fx-background-color: white;" text="Query All">
                            <opaqueInsets>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
                         </Label>
-                        <GridPane layoutX="14.0" layoutY="41.0" prefHeight="136.0" prefWidth="463.0" style="-fx-border-color: black;">
+                        <GridPane layoutX="14.0" layoutY="184.0" prefHeight="136.0" prefWidth="470.0" style="-fx-border-color: black;">
                            <children>
                               <Button mnemonicParsing="false" text="Title" />
                               <Button mnemonicParsing="false" text="Search" GridPane.columnIndex="2" />
@@ -62,7 +62,38 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Label layoutX="29.0" layoutY="28.0" style="-fx-background-color: white;" text="Search a book">
+                        <Label layoutX="37.0" layoutY="164.0" style="-fx-background-color: white;" text="Search a book">
+                           <opaqueInsets>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </opaqueInsets>
+                        </Label>
+                        <GridPane layoutX="16.0" layoutY="28.0" prefHeight="115.0" prefWidth="470.0" style="-fx-border-color: black;">
+                           <children>
+                              <Button mnemonicParsing="false" text="Title" />
+                              <TextField fx:id="AddABookTitleTF" GridPane.columnIndex="1">
+                                 <padding>
+                                    <Insets top="2.0" />
+                                 </padding>
+                              </TextField>
+                              <Button mnemonicParsing="false" text="Author" GridPane.rowIndex="1" />
+                              <TextField fx:id="AddABookAuthorTF" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <padding>
+                                    <Insets top="2.0" />
+                                 </padding>
+                              </TextField>
+                              <Button fx:id="AddBookBtn" mnemonicParsing="false" onAction="#addABook" text="Add" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <Label layoutX="29.0" layoutY="15.0" style="-fx-background-color: white;" text="Add A book">
                            <opaqueInsets>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
@@ -73,7 +104,7 @@
           </Tab>
           <Tab text="Borrower">
             <content>
-              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="475.0">
+              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="580.0" prefWidth="505.0">
                      <children>
                         <GridPane layoutX="28.0" layoutY="24.0" prefHeight="159.0" prefWidth="444.0" style="-fx-border-color: black;">
                            <columnConstraints>

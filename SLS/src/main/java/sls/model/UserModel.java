@@ -5,11 +5,21 @@
  */
 package sls.model;
 
+import java.sql.Connection;
+
 /**
  *
  * @author Faqiu Sun
  */
-public class UserModel implements IUserModel{
+public class UserModel implements IUserModel {
+
+    //JDBC connection
+    private Connection connection;
+
+    public UserModel(Connection connection) {
+        this.connection = connection;
+    }
+    
 
     public User findValidUser(String name, String password) {
         return new User();

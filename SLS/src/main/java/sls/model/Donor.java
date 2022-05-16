@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sls.view;
-
-import sls.presenter.BookPresenter;
+package sls.model;
 
 /**
  *
  * @author Faqiu Sun
  */
-public interface IMainView {
-    void bind(BookPresenter bp);
-    void appendTextArea(String m);
+public class Donor {
+    
 }

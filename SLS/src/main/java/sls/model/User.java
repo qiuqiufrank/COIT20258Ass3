@@ -20,7 +20,7 @@ public class User {
     private String fullname;
     private String email;
     private String phoneNumber;
-    private UserType userType;
+    private boolean isAdmin;
 
     public long getId() {
         return Id;
@@ -70,12 +70,14 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public boolean isIsAdmin() {
+        return isAdmin;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
+
+
     
 }

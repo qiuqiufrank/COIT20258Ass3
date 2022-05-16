@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import sls.model.IUserModel;
 import sls.model.User;
 import sls.model.IUserModel;
-import sls.model.UserType;
 import sls.view.MainView;
 
 /**
