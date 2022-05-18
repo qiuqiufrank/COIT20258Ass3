@@ -10,22 +10,23 @@ package sls.model;
  * @author Faqiu Sun
  */
 public class Book {
-    private String Id;
+    private String id;
     private String title;
     private String author;
     private int copies;
     private int borrowedCount;
 
-    public Book(String Id, String title, String author, int copies, int borrowedCount) {
-        this.Id = Id;
+    public Book(String id, String title, String author, int copies, int borrowedCount) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.copies = copies;
         this.borrowedCount = borrowedCount;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return String.format("book id:%s, title=%s, author=%s, copies=%d, borrowedCount=%d", id,title,author,copies,borrowedCount);
+    }
     
 }

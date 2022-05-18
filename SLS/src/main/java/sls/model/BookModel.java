@@ -19,13 +19,15 @@ import java.util.List;
  */
 public class BookModel implements IBookModel {
 
-
     //JDBC connection
     private Connection connection;
 
     private PreparedStatement addBookStatement;
     private PreparedStatement allIssuedBookStatement;
     private PreparedStatement allOverdueReturnStatement;
+    private PreparedStatement queryByTitleStatement;
+    private PreparedStatement queryByAuthorStatement;
+    private PreparedStatement queryByTitleAndAuthorStatement;
 
     public BookModel(Connection connection) {
         this.connection = connection;
@@ -38,8 +40,14 @@ public class BookModel implements IBookModel {
                     "INSERT INTO Book(Title ,Author ,Copies ,BorrowedCount ) VALUES"
                     + "(?,?,?,?)"
             );
-            allIssuedBookStatement= connection.prepareStatement(
-                    "SELECT * FROM Book where Returned=false"
+//            allIssuedBookStatement= connection.prepareStatement(
+//                    "SELECT * FROM Book where Returned=false"
+//            );
+            queryByTitleAndAuthorStatement = connection.prepareStatement(
+                    "SELECT * FROM Book where Title=? and Author=?"
+            );
+            queryByTitleStatement = connection.prepareStatement(
+                    "SELECT * FROM Book where Title=? "
             );
 
         } catch (SQLException e) {
@@ -49,33 +57,102 @@ public class BookModel implements IBookModel {
     }
 
     @Override
-    public int addNewBook(String title, String author) {
-
+    public Book addNewBook(String title, String author) {
         try {
             //Set Parameters for the PreparedStatement
             addBookStatement.setString(1, title);
             addBookStatement.setString(2, author);
             addBookStatement.setString(3, "0");
             addBookStatement.setString(4, "0");
-            return addBookStatement.executeUpdate();
+            addBookStatement.executeUpdate();
+            return queryByTitleAndAuthor(title, author);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
         }
-
+        return null;
     }
-    public List<Book> getAllIssuedBooks(){
-        try (ResultSet resultSet = allIssuedBookStatement.executeQuery()) {
+
+    private List<Book> parseBooks(ResultSet resultSet) {
+        try {
             List<Book> results = new ArrayList<Book>();
-            //Loop for every taxpayer in results
+            //Loop for every book in results
             while (resultSet.next()) {
                 results.add(new Book(
                         resultSet.getString("Id"),
                         resultSet.getString("Title"),
                         resultSet.getString("Author"),
                         resultSet.getInt("Copies"),
-                        resultSet.getInt("BorrowedCount")                        
+                        resultSet.getInt("BorrowedCount")
+                ));
+            }
+            return results;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Book> searchByTitle(String title) {
+        try {
+            queryByTitleStatement.setString(1, title);
+            ResultSet resultSet = queryByTitleStatement.executeQuery();
+            return parseBooks(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Book> searchByAuthor(String author) {
+        try {
+            queryByAuthorStatement.setString(1, author);
+            ResultSet resultSet = queryByAuthorStatement.executeQuery();
+            return parseBooks(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Book queryByTitleAndAuthor(String title, String author) {
+
+        try {
+            queryByTitleAndAuthorStatement.setString(1, title);
+            queryByTitleAndAuthorStatement.setString(2, author);
+            ResultSet resultSet = queryByTitleAndAuthorStatement.executeQuery();
+
+            //Loop for every taxpayer in results
+            if (resultSet.next()) {
+                return new Book(
+                        resultSet.getString("Id"),
+                        resultSet.getString("Title"),
+                        resultSet.getString("Author"),
+                        resultSet.getInt("Copies"),
+                        resultSet.getInt("BorrowedCount")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+    public List<Book> getAllIssuedBooks() {
+        try (ResultSet resultSet = allIssuedBookStatement.executeQuery()) {
+            List<Book> results = new ArrayList<Book>();
+            //Loop for every book in results
+            while (resultSet.next()) {
+                results.add(new Book(
+                        resultSet.getString("Id"),
+                        resultSet.getString("Title"),
+                        resultSet.getString("Author"),
+                        resultSet.getInt("Copies"),
+                        resultSet.getInt("BorrowedCount")
                 ));
             }
             return results;

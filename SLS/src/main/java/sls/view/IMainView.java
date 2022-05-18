@@ -14,4 +14,5 @@ import sls.presenter.BookPresenter;
 public interface IMainView {
     void bind(BookPresenter bp);
     void appendTextArea(String m);
+    void promptMessage(String m);
 }

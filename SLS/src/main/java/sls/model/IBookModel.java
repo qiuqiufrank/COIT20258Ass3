@@ -13,6 +13,11 @@ import java.util.List;
  */
 public interface IBookModel {
 
-    int addNewBook(String title, String author);
-    List<Book> getAllIssuedBooks();
+    public Book addNewBook(String title, String author);
+
+    public List<Book> getAllIssuedBooks();
+
+    public List<Book> searchByTitle(String title);
+
+    public List<Book> searchByAuthor(String author);
 }

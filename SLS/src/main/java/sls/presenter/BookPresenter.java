@@ -5,6 +5,8 @@
  */
 package sls.presenter;
 
+import java.util.List;
+import sls.model.Book;
 import sls.model.IBookModel;
 import sls.view.IMainView;
 
@@ -21,15 +23,24 @@ public class BookPresenter {
         this.bookModel = bookModel;
         this.mainView = mainView;
     }
-    
 
     public void addNewBook(String title, String author) {
-        if(bookModel.addNewBook(title, author)>0){
-            mainView.appendTextArea("Adding book successfully");
+
+        Book book = bookModel.addNewBook(title, author);
+        if (book == null) {
+            mainView.appendTextArea("Adding book failed");
+        } else {
+            mainView.appendTextArea("Adding the book successfully:");
+            mainView.appendTextArea(book.toString());
         }
-        else{
-            mainView.appendTextArea("Adding book failed");            
-        }
+    }
+
+    public void searchByTitle(String title) {
+        List<Book> books = bookModel.searchByTitle(title);
+    }
+
+    public void searchByAuthor(String author) {
+        List<Book> books = bookModel.searchByAuthor(author);
     }
 
 }

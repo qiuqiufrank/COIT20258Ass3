@@ -11,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import sls.presenter.BookPresenter;
 import javafx.scene.control.TextField;
@@ -24,13 +26,10 @@ import javafx.scene.control.TextArea;
 public class MainView implements Initializable, IMainView {
 
     BookPresenter bp;
-    
+
     @FXML
-    private TextArea textArea;
-    
-    @FXML
-    private Button AddBookBtn;
-    
+    private Button searchBooksByTitleBtn;
+
     @FXML
     private TextField AddABookAuthorTF;
 
@@ -38,9 +37,52 @@ public class MainView implements Initializable, IMainView {
     private TextField AddABookTitleTF;
 
     @FXML
-    void addABook(ActionEvent event) {
+    private TextField searchBooksByAuthorTF;
 
-        bp.addNewBook(AddABookTitleTF.getText(), AddABookAuthorTF.getText());
+    @FXML
+    private Button AddBookBtn;
+
+    @FXML
+    private TextField searchBooksByTitleTF;
+
+    @FXML
+    private Button searchBooksByAuthorBtn;
+
+    @FXML
+    private TextArea textArea;
+
+    @FXML
+    void searchBooksByTitle(ActionEvent event) {
+
+    }
+
+    @FXML
+    void searchBooksByAuthor(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addABook(ActionEvent event) {
+        String author = AddABookAuthorTF.getText();
+        String title = AddABookTitleTF.getText();
+
+        if (isEmpty(AddABookAuthorTF)) {
+            return;
+        }
+        if (isEmpty(AddABookTitleTF)) {
+            return;
+        }
+        bp.addNewBook(title, author);
+    }
+
+    private boolean isEmpty(TextField tf) {
+        String v = AddABookTitleTF.getText();
+        if (v.isEmpty()) {
+            promptMessage("Text field should not be empty!");
+            AddABookTitleTF.requestFocus();
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -58,7 +100,15 @@ public class MainView implements Initializable, IMainView {
 
     @Override
     public void appendTextArea(String m) {
-        textArea.appendText(m);
+        textArea.appendText(m + "\n");
+    }
+
+    @Override
+    public void promptMessage(String m) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Message");
+        alert.setHeaderText(m);
+        alert.show();
     }
 
 }

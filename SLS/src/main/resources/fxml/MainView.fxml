@@ -38,19 +38,19 @@
                         <GridPane layoutX="14.0" layoutY="184.0" prefHeight="136.0" prefWidth="470.0" style="-fx-border-color: black;">
                            <children>
                               <Button mnemonicParsing="false" text="Title" />
-                              <Button mnemonicParsing="false" text="Search" GridPane.columnIndex="2" />
-                              <TextField GridPane.columnIndex="1">
+                              <Button fx:id="searchBooksByTitleBtn" mnemonicParsing="false" onAction="#searchBooksByTitle" text="Search" GridPane.columnIndex="2" />
+                              <TextField fx:id="searchBooksByTitleTF" GridPane.columnIndex="1">
                                  <padding>
                                     <Insets top="2.0" />
                                  </padding>
                               </TextField>
                               <Button mnemonicParsing="false" text="Author" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <TextField fx:id="searchBooksByAuthorTF" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets top="2.0" />
                                  </padding>
                               </TextField>
-                              <Button mnemonicParsing="false" text="Search" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="searchBooksByAuthorBtn" mnemonicParsing="false" onAction="#searchBooksByAuthor" text="Search" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" />
@@ -62,7 +62,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Label layoutX="37.0" layoutY="164.0" style="-fx-background-color: white;" text="Search a book">
+                        <Label layoutX="37.0" layoutY="164.0" style="-fx-background-color: white;" text="Search books">
                            <opaqueInsets>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
