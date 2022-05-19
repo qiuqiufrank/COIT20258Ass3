@@ -6,13 +6,18 @@
 package sls.view;
 
 import sls.presenter.BookPresenter;
+import sls.presenter.BorrowerPresenter;
+import sls.presenter.BorrowingRecordPresenter;
 
 /**
  *
  * @author Faqiu Sun
  */
 public interface IMainView {
-    void bind(BookPresenter bp);
-    void appendTextArea(String m);
-    void promptMessage(String m);
+
+    public void bind(BookPresenter bookPresenter, BorrowerPresenter borrowerPresenter, BorrowingRecordPresenter borrowingRecordPresenter);
+
+    public void appendTextArea(String m);
+
+    public void promptMessage(String m);
 }

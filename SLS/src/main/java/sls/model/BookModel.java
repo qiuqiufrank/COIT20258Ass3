@@ -25,6 +25,7 @@ public class BookModel implements IBookModel {
     private PreparedStatement addBookStatement;
     private PreparedStatement allIssuedBookStatement;
     private PreparedStatement allOverdueReturnStatement;
+    private PreparedStatement allAvailableBooksStatement;
     private PreparedStatement queryByTitleStatement;
     private PreparedStatement queryByAuthorStatement;
     private PreparedStatement queryByTitleAndAuthorStatement;
@@ -40,14 +41,22 @@ public class BookModel implements IBookModel {
                     "INSERT INTO Book(Title ,Author ,Copies ,BorrowedCount ) VALUES"
                     + "(?,?,?,?)"
             );
-//            allIssuedBookStatement= connection.prepareStatement(
-//                    "SELECT * FROM Book where Returned=false"
-//            );
+
             queryByTitleAndAuthorStatement = connection.prepareStatement(
                     "SELECT * FROM Book where Title=? and Author=?"
             );
             queryByTitleStatement = connection.prepareStatement(
                     "SELECT * FROM Book where Title=? "
+            );
+            queryByAuthorStatement = connection.prepareStatement(
+                    "SELECT * FROM Book where Author=? "
+            );
+            allIssuedBookStatement = connection.prepareStatement(
+                    "SELECT * FROM Book where BorrowedCount>0 "
+            );
+
+            allAvailableBooksStatement = connection.prepareStatement(
+                    "SELECT * FROM Book where (Copies-BorrowedCount)>0 "
             );
 
         } catch (SQLException e) {
@@ -144,6 +153,27 @@ public class BookModel implements IBookModel {
 
     public List<Book> getAllIssuedBooks() {
         try (ResultSet resultSet = allIssuedBookStatement.executeQuery()) {
+            List<Book> results = new ArrayList<Book>();
+            //Loop for every book in results
+            while (resultSet.next()) {
+                results.add(new Book(
+                        resultSet.getString("Id"),
+                        resultSet.getString("Title"),
+                        resultSet.getString("Author"),
+                        resultSet.getInt("Copies"),
+                        resultSet.getInt("BorrowedCount")
+                ));
+            }
+            return results;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Book> getAvailableBooks() {
+        try (ResultSet resultSet = allAvailableBooksStatement.executeQuery()) {
             List<Book> results = new ArrayList<Book>();
             //Loop for every book in results
             while (resultSet.next()) {

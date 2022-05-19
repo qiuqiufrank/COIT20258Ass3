@@ -28,5 +28,46 @@ public class Book {
     public String toString() {
         return String.format("book id:%s, title=%s, author=%s, copies=%d, borrowedCount=%d", id,title,author,copies,borrowedCount);
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getCopies() {
+        return copies;
+    }
+
+    public void setCopies(int copies) {
+        this.copies = copies;
+    }
+
+    public int getBorrowedCount() {
+        return borrowedCount;
+    }
+
+    public void setBorrowedCount(int borrowedCount) {
+        this.borrowedCount = borrowedCount;
+    }
+    
     
 }

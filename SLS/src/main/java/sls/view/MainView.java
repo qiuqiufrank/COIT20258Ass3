@@ -6,17 +6,34 @@
 package sls.view;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.Initializable;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
 import sls.presenter.BookPresenter;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
+import javafx.util.StringConverter;
+import sls.model.Book;
+import sls.model.Borrower;
+import sls.presenter.BorrowerPresenter;
+import sls.presenter.BorrowingRecordPresenter;
 
 /**
  * FXML Controller class
@@ -25,22 +42,24 @@ import javafx.scene.control.TextArea;
  */
 public class MainView implements Initializable, IMainView {
 
-    BookPresenter bp;
+    BookPresenter bookPresenter;
+    BorrowerPresenter borrowerPresenter;
+    BorrowingRecordPresenter borrowingRecordPresenter;
 
     @FXML
     private Button searchBooksByTitleBtn;
 
     @FXML
-    private TextField AddABookAuthorTF;
+    private Button addBookBtn;
 
     @FXML
-    private TextField AddABookTitleTF;
+    private TextField addABorrowerEmailTF;
+
+    @FXML
+    private TextField addABookAuthorTF;
 
     @FXML
     private TextField searchBooksByAuthorTF;
-
-    @FXML
-    private Button AddBookBtn;
 
     @FXML
     private TextField searchBooksByTitleTF;
@@ -49,37 +68,184 @@ public class MainView implements Initializable, IMainView {
     private Button searchBooksByAuthorBtn;
 
     @FXML
+    private TextField addABorrowerPhoneTF;
+
+    @FXML
+    private TextField addABookTitleTF;
+
+    @FXML
+    private TextField addABorrowerNameTF;
+
+    @FXML
+    private Button overdueReturnsBtn;
+
+    @FXML
+    private Button issuedBooks;
+
+    @FXML
     private TextArea textArea;
 
     @FXML
-    void searchBooksByTitle(ActionEvent event) {
+    private Button addABorrowerBtn;
 
+    @FXML
+    private ComboBox<Book> borrowABookBookCB;
+    @FXML
+    private ComboBox<Borrower> borrowABookBorrowerCB;
+
+    @FXML
+    private DatePicker issuedDateDP;
+
+    @FXML
+    private DatePicker returnDateDP;
+
+    @FXML
+    void addABorrower(ActionEvent event) {
+
+        if (isEmpty(addABorrowerNameTF)) {
+            return;
+        }
+        if (isEmpty(addABorrowerPhoneTF)) {
+            return;
+        }
+        if (isEmpty(addABorrowerEmailTF)) {
+            return;
+        }
+        borrowerPresenter.addABorrower(addABorrowerNameTF.getText(), addABorrowerPhoneTF.getText(), addABorrowerEmailTF.getText());
+    }
+
+    @FXML
+    void getIssuedBooks(ActionEvent event) {
+        bookPresenter.getIssuedBooks();
+    }
+
+    @FXML
+    void getOverdueReturns(ActionEvent event) {
+
+    }
+
+    @FXML
+    void searchBooksByTitle(ActionEvent event) {
+        if (isEmpty(searchBooksByTitleTF)) {
+            return;
+        }
+        bookPresenter.searchByTitle(searchBooksByTitleTF.getText());
     }
 
     @FXML
     void searchBooksByAuthor(ActionEvent event) {
 
+        if (isEmpty(searchBooksByAuthorTF)) {
+            return;
+        }
+        bookPresenter.searchByAuthor(searchBooksByAuthorTF.getText());
     }
 
     @FXML
     void addABook(ActionEvent event) {
-        String author = AddABookAuthorTF.getText();
-        String title = AddABookTitleTF.getText();
+        String author = addABookAuthorTF.getText();
+        String title = addABookTitleTF.getText();
 
-        if (isEmpty(AddABookAuthorTF)) {
+        if (isEmpty(addABookAuthorTF)) {
             return;
         }
-        if (isEmpty(AddABookTitleTF)) {
+        if (isEmpty(addABookTitleTF)) {
             return;
         }
-        bp.addNewBook(title, author);
+        bookPresenter.addNewBook(title, author);
+    }
+
+    @FXML
+    void onShowAvailableBooks(Event event) {
+
+        ObservableList<Book> books = bookPresenter.getAvailableBooks();
+        borrowABookBookCB.setItems(books);
+
+        borrowABookBookCB.setConverter(new StringConverter<Book>() {
+            @Override
+            public String toString(Book object) {
+                return object.getId();
+            }
+
+            @Override
+            public Book fromString(String string) {
+                return books.stream().filter(ap
+                        -> ap.getId().equals(string)).findFirst().orElse(null);
+            }
+        });
+
+//        borrowABookBookCB.valueProperty().addListener((obs, oldVal, newVal)
+//                -> System.out.println("Price of the " + newVal.getId()));
+    }
+
+    @FXML
+    void onShowAllBorrowers(Event event) {
+
+        ObservableList<Borrower> borrowers = borrowerPresenter.getAllBorrowers();
+        borrowABookBorrowerCB.setItems(borrowers);
+
+        borrowABookBorrowerCB.setConverter(new StringConverter<Borrower>() {
+            @Override
+            public String toString(Borrower object) {
+                return object.getName() + ":" + object.getId();
+            }
+
+            @Override
+            public Borrower fromString(String string) {
+                String vs[] = string.split(":");
+                if (vs.length != 2) {
+                    return null;
+                }
+                Long id = Long.parseLong(vs[1]);
+                return borrowers.stream().filter(ap
+                        -> ap.getId() == (id)).findFirst().orElse(null);
+            }
+        });
+
+    }
+
+    @FXML
+    void BorrowABook(ActionEvent e) {
+
+        if (issuedDateDP.getValue() == null) {
+            promptMessage("Issued date must be selected");
+            return;
+        }
+        if (returnDateDP.getValue() == null) {
+            promptMessage("Return date must be selected");
+            return;
+        }
+
+        LocalDate localDate1 = issuedDateDP.getValue();
+        Instant instant1 = Instant.from(localDate1.atStartOfDay(ZoneId.systemDefault()));
+        Date issuedDate = Date.from(instant1);
+
+        LocalDate localDate2 = returnDateDP.getValue();
+        Instant instant2 = Instant.from(localDate2.atStartOfDay(ZoneId.systemDefault()));
+        Date returnDate = Date.from(instant2);
+
+        if (returnDate.before(issuedDate) || returnDate.equals(issuedDate)) {
+            promptMessage("Return date must be after the issued date");
+        }
+        Book book = borrowABookBookCB.getValue();
+        Borrower borrower = borrowABookBorrowerCB.getValue();
+        if (book == null) {
+            promptMessage("Book must be selected");
+            return;
+        }
+        if (borrower == null) {
+            promptMessage("Borrower must be selected");
+            return;
+        }
+
+        borrowingRecordPresenter.IssueABook(book, borrower, issuedDate, returnDate);
     }
 
     private boolean isEmpty(TextField tf) {
-        String v = AddABookTitleTF.getText();
+        String v = tf.getText();
         if (v.isEmpty()) {
             promptMessage("Text field should not be empty!");
-            AddABookTitleTF.requestFocus();
+            tf.requestFocus();
             return true;
         }
         return false;
@@ -90,12 +256,13 @@ public class MainView implements Initializable, IMainView {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
     @Override
-    public void bind(BookPresenter bp) {
-        this.bp = bp;
+    public void bind(BookPresenter bookPresenter, BorrowerPresenter borrowerPresenter, BorrowingRecordPresenter borrowingRecordPresenter) {
+        this.bookPresenter = bookPresenter;
+        this.borrowerPresenter = borrowerPresenter;
+        this.borrowingRecordPresenter = borrowingRecordPresenter;
     }
 
     @Override

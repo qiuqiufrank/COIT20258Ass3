@@ -5,10 +5,15 @@
  */
 package sls.model;
 
+import java.util.List;
+
 /**
  *
  * @author Faqiu Sun
  */
-public interface IBorrowingRecord {
-    
+public interface IBorrowerModel {
+
+    public Borrower addABorrower(String name, String phone, String email);
+
+    public List<Borrower> getAllBorrowers();
 }

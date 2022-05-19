@@ -20,4 +20,6 @@ public interface IBookModel {
     public List<Book> searchByTitle(String title);
 
     public List<Book> searchByAuthor(String author);
+
+    public List<Book> getAvailableBooks();
 }

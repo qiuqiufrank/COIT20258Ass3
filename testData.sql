@@ -30,7 +30,7 @@ VALUES
 (4,2,1)
 ;
 
-INSERT INTO BorrowingRecord(IssueDate ,ExpecteReturn , Returned, BorrowerId ,BookId ) VALUES 
+INSERT INTO BorrowingRecord(IssuedDate ,ExpectedReturn , Returned, BorrowerId ,BookId ) VALUES 
 ("2022-04-23 00:00:00","2022-06-23 00:00:00",false,1,1),
  ("2022-02-23 00:00:00","2022-05-21 00:00:00",false,1,2),
  ("2022-03-12 00:00:00","2022-05-23 00:00:00",false,2,1)
@@ -62,7 +62,7 @@ WHERE  Id= 1;
 INSERT INTO Borrower(Name,Email ,PhoneNumber ) VALUES 
 ("bn3","email23@test.com","423456789");
 -- c)	issue books to a borrower.
-INSERT INTO BorrowingRecord(IssueDate ,ExpecteReturn ,Returned,BorrowerId ,BookId ) VALUES 
+INSERT INTO BorrowingRecord(IssuedDate ,ExpectedReturn ,Returned,BorrowerId ,BookId ) VALUES 
 ("2022-04-12 00:00:00","2022-06-15 00:00:00",false,2,2);
 
 UPDATE Book

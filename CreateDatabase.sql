@@ -45,7 +45,7 @@ BEFORE INSERT ON Book
 FOR EACH ROW
 begin
 INSERT INTO Book_seq VALUES (NULL);
-SET NEW.Id = CONCAT(RPAD(NEW.Title, 3, '0'), LPAD(LAST_INSERT_ID(), 4, '0'));
+SET NEW.Id = CONCAT(RPAD(NEW.Title, 3, '0'), LAST_INSERT_ID());
 end;//
 delimiter ;
 
@@ -64,8 +64,8 @@ CREATE TABLE Donation
 CREATE TABLE BorrowingRecord
 (
 	Id INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
-	IssueDate Date NOT NULL,
-	ExpecteReturn DATE NOT NULL,
+	IssuedDate Date NOT NULL,
+	ExpectedReturn DATE NOT NULL,
 	Returned Boolean NOT NULL,
 	BorrowerId integer NOT NULL,
     CONSTRAINT FK_BorrowingRecordBorrower FOREIGN KEY (BorrowerId) REFERENCES Borrower(Id),

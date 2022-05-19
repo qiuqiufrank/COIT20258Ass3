@@ -9,26 +9,34 @@ package sls.model;
  *
  * @author Faqiu Sun
  */
-
-
-
-
 public class Borrower {
-    private long Id;
+
+    private long id;
     private String name;
     private String email;
     private String phoneNumber;
 
+    public Borrower(String name, String email, String phoneNumber) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(long Id) {
-        this.Id = Id;
+    public void setId(long id) {
+        this.id = id;
     }
 
- 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getEmail() {
         return email;
@@ -46,5 +54,10 @@ public class Borrower {
         this.phoneNumber = phoneNumber;
     }
 
-    
+
+    @Override
+    public String toString() {
+        return String.format("Borrower id:%d, name=%s, phone=%s, email=%s", id, name, phoneNumber, email);
+    }
+
 }
