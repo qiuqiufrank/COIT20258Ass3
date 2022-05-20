@@ -134,7 +134,7 @@
                         </Label>
                         <GridPane layoutX="22.0" layoutY="333.0" prefHeight="105.0" prefWidth="449.0" style="-fx-border-color: black;">
                            <children>
-                              <Button mnemonicParsing="false" text="Return" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="returnABookBtn" mnemonicParsing="false" onAction="#returnABook" text="Return" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <Label style="-fx-background-color: white;" text="Borrower">
                                  <opaqueInsets>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -145,8 +145,8 @@
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </opaqueInsets>
                               </Label>
-                              <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
-                              <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="returnABookBorrowerCB" onInputMethodTextChanged="#onShowAllBorrowers" onShown="#onShowIssuedBorrowers" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="returnABookBookCB" onInputMethodTextChanged="#onShowBorrowedBooks" onShown="#onShowBorrowedBooks" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" prefWidth="45.0" />
@@ -167,7 +167,7 @@
                            <children>
                               <Label text="Book" GridPane.rowIndex="1" />
                               <Label text="Borrower" />
-                              <Button fx:id="borrowABookBtn" mnemonicParsing="false" onAction="#BorrowABook" text="Borrow" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Button fx:id="borrowABookBtn" mnemonicParsing="false" onAction="#borrowABook" text="Borrow" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                               <ComboBox fx:id="borrowABookBorrowerCB" onShown="#onShowAllBorrowers" prefWidth="150.0" GridPane.columnIndex="1" />
                               <ComboBox fx:id="borrowABookBookCB" onShown="#onShowAvailableBooks" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <DatePicker fx:id="issuedDateDP" GridPane.columnIndex="3" />

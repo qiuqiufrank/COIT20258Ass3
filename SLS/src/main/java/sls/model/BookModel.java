@@ -29,6 +29,8 @@ public class BookModel implements IBookModel {
     private PreparedStatement queryByTitleStatement;
     private PreparedStatement queryByAuthorStatement;
     private PreparedStatement queryByTitleAndAuthorStatement;
+    private PreparedStatement queryIssuedBooksByBorrowerStatement;
+    private PreparedStatement updateBorrowedCountStatement;
 
     public BookModel(Connection connection) {
         this.connection = connection;
@@ -58,6 +60,10 @@ public class BookModel implements IBookModel {
             allAvailableBooksStatement = connection.prepareStatement(
                     "SELECT * FROM Book where (Copies-BorrowedCount)>0 "
             );
+            updateBorrowedCountStatement = connection.prepareStatement(
+                    "UPDATE  Book SET BorrowedCount =?  where Id=?"
+            );
+       //     queryIssuedBooksByBorrowerStatement=
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -187,6 +193,21 @@ public class BookModel implements IBookModel {
             }
             return results;
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Book updateBorrowedCount(Book book) {
+        try {
+            // Set Parameters for the PreparedStatement
+            updateBorrowedCountStatement.setInt(1, book.getBorrowedCount());
+            updateBorrowedCountStatement.setString(2, book.getId());
+            updateBorrowedCountStatement.executeUpdate();
+            return book;
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

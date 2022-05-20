@@ -35,6 +35,14 @@ public class BorrowerPresenter {
         }
         return obs;
     }
+        public ObservableList<Borrower> getAllIssuedBorrowers() {
+        List<Borrower> borrowers = borrowerModel.getAllIssuedBorrowers();
+        ObservableList<Borrower> obs = FXCollections.observableArrayList();
+        for (Borrower b : borrowers) {
+            obs.add(b);
+        }
+        return obs;
+    }
 
     public void addABorrower(String name, String phone, String email) {
         Borrower borrower = borrowerModel.addABorrower(name, phone, email);

@@ -55,7 +55,7 @@ public class MainApp extends Application {
         LoginPresenter loginPresenter = new LoginPresenter();
         BorrowerPresenter borrowerPresenter = new BorrowerPresenter(borrowerModel, mainView);
         BookPresenter bookPresenter = new BookPresenter(bookModel, mainView);
-        BorrowingRecordPresenter borrowingRecordPresenter = new BorrowingRecordPresenter(borrowingRecordModel, mainView);
+        BorrowingRecordPresenter borrowingRecordPresenter = new BorrowingRecordPresenter(borrowingRecordModel,bookModel, mainView);
 
         mainView.bind(bookPresenter, borrowerPresenter, borrowingRecordPresenter);
         loginView.bind(loginPresenter);

@@ -85,7 +85,15 @@ public class BookPresenter {
             obs.add(b);
         }
         return obs;
+    }
 
+    public ObservableList<Book> getBorrowedBooks() {
+        List<Book> books = bookModel.getAllIssuedBooks();
+        ObservableList<Book> obs = FXCollections.observableArrayList();
+        for (Book b : books) {
+            obs.add(b);
+        }
+        return obs;
     }
 
 }

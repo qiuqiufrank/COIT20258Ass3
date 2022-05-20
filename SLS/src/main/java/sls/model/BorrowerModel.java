@@ -23,6 +23,7 @@ public class BorrowerModel implements IBorrowerModel {
     private Connection connection;
     private PreparedStatement addABorrowerStatement;
     private PreparedStatement getAllBorrowersStatement;
+    private PreparedStatement issuedBorrowerStatement;
 
     public BorrowerModel(Connection connection) {
         this.connection = connection;
@@ -34,6 +35,9 @@ public class BorrowerModel implements IBorrowerModel {
             );
             getAllBorrowersStatement = connection.prepareStatement(
                     "SELECT * FROM Borrower "
+            );
+            issuedBorrowerStatement = connection.prepareStatement(
+                    "SELECT * from Borrower where Id in (SELECT DISTINCT BorrowerId FROM BorrowingRecord WHERE Returned=false);"
             );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,6 +72,27 @@ public class BorrowerModel implements IBorrowerModel {
     @Override
     public List<Borrower> getAllBorrowers() {
         try (ResultSet resultSet = getAllBorrowersStatement.executeQuery()) {
+            List<Borrower> results = new ArrayList<Borrower>();
+            //Loop for every book in results
+            while (resultSet.next()) {
+                Borrower b = new Borrower(
+                        resultSet.getString("Name"),
+                        resultSet.getString("Email"),
+                        resultSet.getString("PhoneNumber")
+                );
+                b.setId(resultSet.getLong("Id"));
+                results.add(b);
+            }
+            return results;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Borrower> getAllIssuedBorrowers() {
+        try (ResultSet resultSet = issuedBorrowerStatement.executeQuery()) {
             List<Borrower> results = new ArrayList<Borrower>();
             //Loop for every book in results
             while (resultSet.next()) {

@@ -23,6 +23,7 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
     private Connection connection;
     private PreparedStatement issueABookStatement;
     private PreparedStatement returnABookStatement;
+    private PreparedStatement IssuedBooksByBorrowerStatement;
 
     public BorrowingRecordModel(Connection connection) {
         this.connection = connection;
@@ -32,6 +33,10 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
                     "INSERT INTO BorrowingRecord(IssuedDate ,ExpectedReturn , Returned, BorrowerId ,BookId ) VALUES"
                     + "(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS
             );
+            returnABookStatement = connection.prepareStatement(
+                    "UPDATE BorrowingRecord SET Returned=? WHERE BorrowerId=? and BookId=?"
+            );
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -41,8 +46,8 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
     public BorrowingRecord issueABook(Book book, Borrower borrower, Date issuedDate, Date expectedReturn) {
         try {
             //Set Parameters for the PreparedStatement
-            issueABookStatement.setDate(1,new java.sql.Date(issuedDate.getTime()));
-            issueABookStatement.setDate(2,new java.sql.Date(expectedReturn.getTime()) );
+            issueABookStatement.setDate(1, new java.sql.Date(issuedDate.getTime()));
+            issueABookStatement.setDate(2, new java.sql.Date(expectedReturn.getTime()));
             issueABookStatement.setBoolean(3, false);
             issueABookStatement.setLong(4, borrower.getId());
             issueABookStatement.setString(5, book.getId());
@@ -64,8 +69,18 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
     }
 
     @Override
-    public BorrowingRecord returnABook(Book book, Borrower borrower) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int returnABook(Book book, Borrower borrower) {
+        try {
+
+            issueABookStatement.setBoolean(1, true);
+            issueABookStatement.setLong(2, borrower.getId());
+            issueABookStatement.setString(3, book.getId());
+            return issueABookStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
 }

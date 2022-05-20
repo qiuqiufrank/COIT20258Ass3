@@ -92,6 +92,10 @@ public class MainView implements Initializable, IMainView {
     private ComboBox<Book> borrowABookBookCB;
     @FXML
     private ComboBox<Borrower> borrowABookBorrowerCB;
+    @FXML
+    private ComboBox<Borrower> returnABookBorrowerCB;
+    @FXML
+    private ComboBox<Book> returnABookBookCB;
 
     @FXML
     private DatePicker issuedDateDP;
@@ -159,53 +163,34 @@ public class MainView implements Initializable, IMainView {
     void onShowAvailableBooks(Event event) {
 
         ObservableList<Book> books = bookPresenter.getAvailableBooks();
-        borrowABookBookCB.setItems(books);
-
-        borrowABookBookCB.setConverter(new StringConverter<Book>() {
-            @Override
-            public String toString(Book object) {
-                return object.getId();
-            }
-
-            @Override
-            public Book fromString(String string) {
-                return books.stream().filter(ap
-                        -> ap.getId().equals(string)).findFirst().orElse(null);
-            }
-        });
+        updateBookOptions(books, borrowABookBookCB);
 
 //        borrowABookBookCB.valueProperty().addListener((obs, oldVal, newVal)
 //                -> System.out.println("Price of the " + newVal.getId()));
     }
 
     @FXML
-    void onShowAllBorrowers(Event event) {
-
-        ObservableList<Borrower> borrowers = borrowerPresenter.getAllBorrowers();
-        borrowABookBorrowerCB.setItems(borrowers);
-
-        borrowABookBorrowerCB.setConverter(new StringConverter<Borrower>() {
-            @Override
-            public String toString(Borrower object) {
-                return object.getName() + ":" + object.getId();
-            }
-
-            @Override
-            public Borrower fromString(String string) {
-                String vs[] = string.split(":");
-                if (vs.length != 2) {
-                    return null;
-                }
-                Long id = Long.parseLong(vs[1]);
-                return borrowers.stream().filter(ap
-                        -> ap.getId() == (id)).findFirst().orElse(null);
-            }
-        });
-
+    void onShowBorrowedBooks(Event event) {
+        ObservableList<Book> books = bookPresenter.getAvailableBooks();
+        updateBookOptions(books, returnABookBookCB);
     }
 
     @FXML
-    void BorrowABook(ActionEvent e) {
+    void onShowAllBorrowers(Event event) {
+
+        ObservableList<Borrower> borrowers = borrowerPresenter.getAllBorrowers();
+        updateBorrowerOptions(borrowers, borrowABookBorrowerCB);
+    }
+
+    @FXML
+    void onShowIssuedBorrowers(Event event) {
+
+        ObservableList<Borrower> borrowers = borrowerPresenter.getAllIssuedBorrowers();
+        updateBorrowerOptions(borrowers, returnABookBorrowerCB);
+    }
+
+    @FXML
+    void borrowABook(ActionEvent e) {
 
         if (issuedDateDP.getValue() == null) {
             promptMessage("Issued date must be selected");
@@ -239,6 +224,61 @@ public class MainView implements Initializable, IMainView {
         }
 
         borrowingRecordPresenter.IssueABook(book, borrower, issuedDate, returnDate);
+    }
+
+    @FXML
+    void returnABook(ActionEvent e) {
+
+        Book book = returnABookBookCB.getValue();
+        Borrower borrower = returnABookBorrowerCB.getValue();
+        if (book == null) {
+            promptMessage("Book must be selected");
+            return;
+        }
+        if (borrower == null) {
+            promptMessage("Borrower must be selected");
+            return;
+        }
+
+        borrowingRecordPresenter.returnABook(book, borrower);
+
+    }
+
+    void updateBookOptions(ObservableList<Book> books, ComboBox<Book> cb) {
+        cb.setItems(books);
+        cb.setConverter(new StringConverter<Book>() {
+            @Override
+            public String toString(Book object) {
+                return object.getId();
+            }
+
+            @Override
+            public Book fromString(String string) {
+                return books.stream().filter(ap
+                        -> ap.getId().equals(string)).findFirst().orElse(null);
+            }
+        });
+    }
+
+    void updateBorrowerOptions(ObservableList<Borrower> borrowers, ComboBox<Borrower> cb) {
+        cb.setItems(borrowers);
+        cb.setConverter(new StringConverter<Borrower>() {
+            @Override
+            public String toString(Borrower object) {
+                return object.getName() + ":" + object.getId();
+            }
+
+            @Override
+            public Borrower fromString(String string) {
+                String vs[] = string.split(":");
+                if (vs.length != 2) {
+                    return null;
+                }
+                Long id = Long.parseLong(vs[1]);
+                return borrowers.stream().filter(ap
+                        -> ap.getId() == (id)).findFirst().orElse(null);
+            }
+        });
     }
 
     private boolean isEmpty(TextField tf) {

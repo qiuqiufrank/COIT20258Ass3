@@ -78,8 +78,8 @@ public class BorrowingRecord {
 
     @Override
     public String toString() {
-        return String.format("Borrowing Record Id:%d,issued date:%s,expected return date:%s,book name:%s,borrower:%s,returned:%s",
-                id,issueDate.toString(),expectedReturnDate.toString(),book.getTitle(),borrower.getName(),returned?"true":"false");
+        return String.format("Borrowing Record Id:%d, issued date:%s, expected return date:%s, book name:%s, borrower:%s, returned:%s",
+                id,issueDate.toString(),expectedReturnDate.toString(),book.getTitle(),borrower.getName(),returned?"yes":"no");
     }
 
     

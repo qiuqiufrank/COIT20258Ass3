@@ -22,4 +22,7 @@ public interface IBookModel {
     public List<Book> searchByAuthor(String author);
 
     public List<Book> getAvailableBooks();
+
+    public Book updateBorrowedCount(Book book);
+
 }

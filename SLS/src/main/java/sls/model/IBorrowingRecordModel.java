@@ -13,6 +13,7 @@ import java.util.Date;
  */
 public interface IBorrowingRecordModel {
 
-    public BorrowingRecord issueABook(Book book, Borrower borrower,Date issueDate,Date expectedReturn) ;
-    public BorrowingRecord returnABook(Book book, Borrower borrower);
+    public BorrowingRecord issueABook(Book book, Borrower borrower, Date issueDate, Date expectedReturn);
+
+    public int returnABook(Book book, Borrower borrower);
 }
