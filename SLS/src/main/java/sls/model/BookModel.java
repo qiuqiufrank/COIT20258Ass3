@@ -26,11 +26,17 @@ public class BookModel implements IBookModel {
     private PreparedStatement allIssuedBookStatement;
     private PreparedStatement allOverdueReturnStatement;
     private PreparedStatement allAvailableBooksStatement;
+    private PreparedStatement allBooksStatement;
+   
+
     private PreparedStatement queryByTitleStatement;
     private PreparedStatement queryByAuthorStatement;
     private PreparedStatement queryByTitleAndAuthorStatement;
+    private PreparedStatement queryByDonorStatement;
     private PreparedStatement queryIssuedBooksByBorrowerStatement;
+    
     private PreparedStatement updateBorrowedCountStatement;
+     private PreparedStatement updateCopiesStatement;
 
     public BookModel(Connection connection) {
         this.connection = connection;
@@ -60,10 +66,22 @@ public class BookModel implements IBookModel {
             allAvailableBooksStatement = connection.prepareStatement(
                     "SELECT * FROM Book where (Copies-BorrowedCount)>0 "
             );
+            allBooksStatement = connection.prepareStatement(
+                    "SELECT * FROM Book"
+            );
+
             updateBorrowedCountStatement = connection.prepareStatement(
                     "UPDATE  Book SET BorrowedCount =?  where Id=?"
             );
-       //     queryIssuedBooksByBorrowerStatement=
+            updateCopiesStatement = connection.prepareStatement(
+                    "UPDATE  Book SET Copies =?  where Id=?"
+            );
+            queryIssuedBooksByBorrowerStatement = connection.prepareStatement(
+                    "SELECT * FROM Book where Id in (SELECT DISTINCT BookId FROM BorrowingRecord where BorrowerId=? and returned=false);"
+            );
+            queryByDonorStatement = connection.prepareStatement(
+                    "SELECT * FROM Book where Id in (SELECT DISTINCT BookId FROM DonationRecord where DonorId=?)"
+            );
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,8 +95,8 @@ public class BookModel implements IBookModel {
             //Set Parameters for the PreparedStatement
             addBookStatement.setString(1, title);
             addBookStatement.setString(2, author);
-            addBookStatement.setString(3, "0");
-            addBookStatement.setString(4, "0");
+            addBookStatement.setInt(3, 0);
+            addBookStatement.setInt(4, 0);
             addBookStatement.executeUpdate();
             return queryByTitleAndAuthor(title, author);
 
@@ -105,7 +123,7 @@ public class BookModel implements IBookModel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<Book>();
     }
 
     @Override
@@ -117,7 +135,7 @@ public class BookModel implements IBookModel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<Book>();
     }
 
     @Override
@@ -129,7 +147,39 @@ public class BookModel implements IBookModel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<Book>();
+    }
+
+    @Override
+    public List<Book> searchBooksByDonor(Long donorId) {
+        try {
+            queryByDonorStatement.setLong(1, donorId);
+            ResultSet resultSet = queryByDonorStatement.executeQuery();
+            return parseBooks(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<Book>();
+    }
+
+    private List<Book> resultToBookList(ResultSet resultSet) {
+        try {
+            List<Book> results = new ArrayList<Book>();
+            // Loop for every book in results
+            while (resultSet.next()) {
+                results.add(new Book(
+                        resultSet.getString("Id"),
+                        resultSet.getString("Title"),
+                        resultSet.getString("Author"),
+                        resultSet.getInt("Copies"),
+                        resultSet.getInt("BorrowedCount")));
+            }
+            return results;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<Book>();
+
     }
 
     private Book queryByTitleAndAuthor(String title, String author) {
@@ -138,64 +188,44 @@ public class BookModel implements IBookModel {
             queryByTitleAndAuthorStatement.setString(1, title);
             queryByTitleAndAuthorStatement.setString(2, author);
             ResultSet resultSet = queryByTitleAndAuthorStatement.executeQuery();
-
-            //Loop for every taxpayer in results
-            if (resultSet.next()) {
-                return new Book(
-                        resultSet.getString("Id"),
-                        resultSet.getString("Title"),
-                        resultSet.getString("Author"),
-                        resultSet.getInt("Copies"),
-                        resultSet.getInt("BorrowedCount")
-                );
+            List<Book> books = resultToBookList(resultSet);
+            if (books.size() > 0) {
+                return books.get(0);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
         return null;
     }
 
     public List<Book> getAllIssuedBooks() {
         try (ResultSet resultSet = allIssuedBookStatement.executeQuery()) {
-            List<Book> results = new ArrayList<Book>();
-            //Loop for every book in results
-            while (resultSet.next()) {
-                results.add(new Book(
-                        resultSet.getString("Id"),
-                        resultSet.getString("Title"),
-                        resultSet.getString("Author"),
-                        resultSet.getInt("Copies"),
-                        resultSet.getInt("BorrowedCount")
-                ));
-            }
-            return results;
+            return resultToBookList(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<Book>();
     }
 
     @Override
     public List<Book> getAvailableBooks() {
         try (ResultSet resultSet = allAvailableBooksStatement.executeQuery()) {
-            List<Book> results = new ArrayList<Book>();
-            //Loop for every book in results
-            while (resultSet.next()) {
-                results.add(new Book(
-                        resultSet.getString("Id"),
-                        resultSet.getString("Title"),
-                        resultSet.getString("Author"),
-                        resultSet.getInt("Copies"),
-                        resultSet.getInt("BorrowedCount")
-                ));
-            }
-            return results;
+            return resultToBookList(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<Book>();
+    }
+
+    @Override
+    public List<Book> getAllBooks() {
+        try (ResultSet resultSet = allBooksStatement.executeQuery()) {
+            return resultToBookList(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<Book>();
     }
 
     @Override
@@ -211,6 +241,34 @@ public class BookModel implements IBookModel {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Book updateCopiesCount(Book book) {
+        try {
+            // Set Parameters for the PreparedStatement
+            updateCopiesStatement.setInt(1, book.getCopies());
+            updateCopiesStatement.setString(2, book.getId());
+            updateCopiesStatement.executeUpdate();
+            return book;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Book> searchIssuedBooksByBorrower(Long BorrowerId) {
+        try {
+            queryIssuedBooksByBorrowerStatement.setLong(1, BorrowerId);
+            ResultSet resultSet = queryIssuedBooksByBorrowerStatement.executeQuery();
+            return resultToBookList(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<Book>();
+
     }
 
 }

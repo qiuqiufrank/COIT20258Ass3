@@ -8,6 +8,8 @@ package sls.view;
 import sls.presenter.BookPresenter;
 import sls.presenter.BorrowerPresenter;
 import sls.presenter.BorrowingRecordPresenter;
+import sls.presenter.DonorPresenter;
+import sls.presenter.UserPresenter;
 
 /**
  *
@@ -15,7 +17,7 @@ import sls.presenter.BorrowingRecordPresenter;
  */
 public interface IMainView {
 
-    public void bind(BookPresenter bookPresenter, BorrowerPresenter borrowerPresenter, BorrowingRecordPresenter borrowingRecordPresenter);
+    public void bind(BookPresenter bookPresenter, BorrowerPresenter borrowerPresenter, BorrowingRecordPresenter borrowingRecordPresenter, DonorPresenter donorPresenter, UserPresenter userPresenter);
 
     public void appendTextArea(String m);
 

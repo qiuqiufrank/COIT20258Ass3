@@ -11,13 +11,8 @@ import java.util.List;
  *
  * @author Faqiu Sun
  */
-public interface IUserModel {
+public interface IDonorModel {
 
-    public User searchValidUser(String name, String password);
-
-    public User addUser(User user);
-
-    public List<User> getAllUsers();
-
-    public int DeleteAUser(String userName);
+    public Donor addNewDonor(String name, String fullName, String email, String phone);
+    public List<Donor> getAllDonors() ;
 }

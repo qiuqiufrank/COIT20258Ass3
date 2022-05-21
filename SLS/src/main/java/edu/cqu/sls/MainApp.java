@@ -17,8 +17,13 @@ import sls.view.MainView;
 import java.sql.Connection;
 import sls.model.BorrowerModel;
 import sls.model.BorrowingRecordModel;
+import sls.model.DonationRecord;
+import sls.model.DonationRecordModel;
+import sls.model.DonorModel;
 import sls.presenter.BorrowerPresenter;
 import sls.presenter.BorrowingRecordPresenter;
+import sls.presenter.DonorPresenter;
+import sls.presenter.UserPresenter;
 
 public class MainApp extends Application {
 
@@ -51,13 +56,18 @@ public class MainApp extends Application {
         BookModel bookModel = new BookModel(connection);
         BorrowerModel borrowerModel = new BorrowerModel(connection);
         BorrowingRecordModel borrowingRecordModel = new BorrowingRecordModel(connection);
+        DonorModel donorModel = new DonorModel(connection);
+        DonationRecordModel donationRecordModel = new DonationRecordModel(connection);
+       
 
         LoginPresenter loginPresenter = new LoginPresenter();
         BorrowerPresenter borrowerPresenter = new BorrowerPresenter(borrowerModel, mainView);
         BookPresenter bookPresenter = new BookPresenter(bookModel, mainView);
-        BorrowingRecordPresenter borrowingRecordPresenter = new BorrowingRecordPresenter(borrowingRecordModel,bookModel, mainView);
-
-        mainView.bind(bookPresenter, borrowerPresenter, borrowingRecordPresenter);
+        BorrowingRecordPresenter borrowingRecordPresenter = new BorrowingRecordPresenter(borrowingRecordModel, bookModel, mainView);
+        DonorPresenter donorPresenter = new DonorPresenter( donorModel, donationRecordModel,bookModel, mainView);
+        UserPresenter userPresenter=new UserPresenter(userModel, mainView);
+        
+        mainView.bind(bookPresenter, borrowerPresenter, borrowingRecordPresenter, donorPresenter,userPresenter);
         loginView.bind(loginPresenter);
         loginPresenter.bind(stage, userModel, mainScene);
 

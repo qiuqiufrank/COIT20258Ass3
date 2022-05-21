@@ -9,33 +9,32 @@ package sls.model;
  *
  * @author Faqiu Sun
  */
-
-
-
-
 public class User {
-    private long Id;
-    private String username;
+
+    //Primary key
+    private String userName;
     private String password;
-    private String fullname;
+    private String fullName;
     private String email;
     private String phoneNumber;
     private boolean isAdmin;
 
-    public long getId() {
-        return Id;
+    public User(String userName, String password, String fullName, String email, String phoneNumber, boolean isAdmin) {
+
+        this.userName = userName;
+        this.password = password;
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.isAdmin = isAdmin;
     }
 
-    public void setId(long Id) {
-        this.Id = Id;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -46,12 +45,12 @@ public class User {
         this.password = password;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -78,6 +77,11 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
+    @Override
+    public String toString() {
+        return String.format("User User name:%s, Full Name:%s, Password:%s, Email:%s, Phone:%s, isAdmin:%s",
+                userName,fullName,password,email,phoneNumber,isAdmin?"Yes":"No");
 
-    
+    }
+
 }

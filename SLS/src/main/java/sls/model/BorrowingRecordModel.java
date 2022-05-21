@@ -23,7 +23,7 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
     private Connection connection;
     private PreparedStatement issueABookStatement;
     private PreparedStatement returnABookStatement;
-    private PreparedStatement IssuedBooksByBorrowerStatement;
+  
 
     public BorrowingRecordModel(Connection connection) {
         this.connection = connection;
@@ -72,10 +72,10 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
     public int returnABook(Book book, Borrower borrower) {
         try {
 
-            issueABookStatement.setBoolean(1, true);
-            issueABookStatement.setLong(2, borrower.getId());
-            issueABookStatement.setString(3, book.getId());
-            return issueABookStatement.executeUpdate();
+            returnABookStatement.setBoolean(1, true);
+            returnABookStatement.setLong(2, borrower.getId());
+            returnABookStatement.setString(3, book.getId());
+            return returnABookStatement.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();

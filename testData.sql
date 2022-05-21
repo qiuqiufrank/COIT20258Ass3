@@ -1,4 +1,9 @@
 
+-- SELECT * from Borrower where Id in (SELECT DISTINCT BorrowerId FROM BorrowingRecord WHERE Returned=false);
+-- INSERT INTO DonationRecord( DonorId ,BookId,Quantity,DonationDate  ) VALUES
+-- (1,"t202",0,"2022-05-03");
+
+
 
 INSERT INTO Book(Title ,Author ,Copies ,BorrowedCount )
 VALUES 

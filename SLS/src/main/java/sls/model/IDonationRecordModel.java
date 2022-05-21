@@ -5,19 +5,13 @@
  */
 package sls.model;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  *
  * @author Faqiu Sun
  */
-public interface IUserModel {
+public interface IDonationRecordModel {
 
-    public User searchValidUser(String name, String password);
-
-    public User addUser(User user);
-
-    public List<User> getAllUsers();
-
-    public int DeleteAUser(String userName);
+     public DonationRecord donateBooks(long donorId, String bookId, int quantity, Date donationDate);
 }

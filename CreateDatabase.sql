@@ -1,9 +1,8 @@
-DROP TABLE `ass3db`.`donation`,`ass3db`.`borrowingrecord`,`ass3db`.`borrower`,   `ass3db`.`donor`, `ass3db`.`user`,`ass3db`.`book`,`ass3db`.`book_seq`;
+DROP TABLE `ass3db`.`donationrecord`,`ass3db`.`borrowingrecord`,`ass3db`.`borrower`,   `ass3db`.`donor`, `ass3db`.`user`,`ass3db`.`book`,`ass3db`.`book_seq`;
 
 CREATE TABLE User
 (
-	Id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	UserName VARCHAR (20) NOT NULL,
+	UserName VARCHAR (20) NOT NULL PRIMARY KEY,
 	Password VARCHAR (8) NOT NULL,
 	FullName VARCHAR (40) NOT NULL,
 	Email VARCHAR (20) NOT NULL,
@@ -14,6 +13,8 @@ CREATE TABLE Donor
 (
 	Id INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
 	Name VARCHAR (20) NOT NULL,
+	FullName VARCHAR (40) NOT NULL,
+	Email VARCHAR (20) NOT NULL,
     PhoneNumber VARCHAR (9) NOT NULL
 );
 CREATE TABLE Borrower
@@ -49,10 +50,11 @@ SET NEW.Id = CONCAT(RPAD(NEW.Title, 3, '0'), LAST_INSERT_ID());
 end;//
 delimiter ;
 
-CREATE TABLE Donation
+CREATE TABLE DonationRecord
 (
 	Id INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
     Quantity integer NOT NULL,
+	DonationDate Date NOT NULL,
     DonorId integer NOT NULL,
     CONSTRAINT FK_DonationDonor  FOREIGN KEY (DonorId) REFERENCES Donor(Id),
     BookId varchar(10) NOT NULL,

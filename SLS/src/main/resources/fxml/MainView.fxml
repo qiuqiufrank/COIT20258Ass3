@@ -19,7 +19,7 @@
                      <children>
                         <GridPane layoutX="15.0" layoutY="358.0" prefHeight="102.0" prefWidth="469.0" style="-fx-border-color: black;">
                            <children>
-                              <Button fx:id="issuedBooks" mnemonicParsing="false" onAction="#getIssuedBooks" text="Issued Books" />
+                              <Button fx:id="issuedBooks" mnemonicParsing="false" onAction="#searchIssuedBooks" text="Issued Books" />
                               <Button fx:id="overdueReturnsBtn" mnemonicParsing="false" onAction="#getOverdueReturns" text="Overdue Returns" GridPane.columnIndex="1" />
                            </children>
                            <columnConstraints>
@@ -81,7 +81,8 @@
                                     <Insets top="2.0" />
                                  </padding>
                               </TextField>
-                              <Button fx:id="addBookBtn" mnemonicParsing="false" onAction="#addABook" text="Add" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="addBookBtn" mnemonicParsing="false" onAction="#addABook" text="Add" GridPane.columnIndex="2" />
+                              <Button mnemonicParsing="false" text="Delete" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" />
@@ -93,7 +94,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Label layoutX="29.0" layoutY="15.0" style="-fx-background-color: white;" text="Add A book">
+                        <Label layoutX="29.0" layoutY="15.0" style="-fx-background-color: white;" text="Add /Delete a book">
                            <opaqueInsets>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
@@ -145,8 +146,8 @@
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </opaqueInsets>
                               </Label>
-                              <ComboBox fx:id="returnABookBorrowerCB" onInputMethodTextChanged="#onShowAllBorrowers" onShown="#onShowIssuedBorrowers" prefWidth="150.0" GridPane.columnIndex="1" />
-                              <ComboBox fx:id="returnABookBookCB" onInputMethodTextChanged="#onShowBorrowedBooks" onShown="#onShowBorrowedBooks" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="returnABookBorrowerCB" onShown="#onShowIssuedBorrowers" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="returnABookBookCB" onShown="#onShowBorrowedBooksByBorrower" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" prefWidth="45.0" />
@@ -168,7 +169,7 @@
                               <Label text="Book" GridPane.rowIndex="1" />
                               <Label text="Borrower" />
                               <Button fx:id="borrowABookBtn" mnemonicParsing="false" onAction="#borrowABook" text="Borrow" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                              <ComboBox fx:id="borrowABookBorrowerCB" onShown="#onShowAllBorrowers" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="borrowABookBorrowerCB" onShown="#onShowAllBorrowersBAB" prefWidth="150.0" GridPane.columnIndex="1" />
                               <ComboBox fx:id="borrowABookBookCB" onShown="#onShowAvailableBooks" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <DatePicker fx:id="issuedDateDP" GridPane.columnIndex="3" />
                               <DatePicker fx:id="returnDateDP" GridPane.columnIndex="3" GridPane.rowIndex="1" />
@@ -194,13 +195,13 @@
                         </Label>
                         <GridPane layoutX="24.0" layoutY="463.0" prefHeight="80.0" prefWidth="444.0" style="-fx-border-color: black;">
                            <children>
-                              <Button mnemonicParsing="false" text="Search" GridPane.columnIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#searchIssuedBookByBorrower" text="Search" GridPane.columnIndex="2" />
                               <Label style="-fx-background-color: white;" text="Borrower">
                                  <opaqueInsets>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </opaqueInsets>
                               </Label>
-                              <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="searchAllBooksByBorrowerBorrowerCB" onShown="#onShowAllBorrowersSBB" prefWidth="150.0" GridPane.columnIndex="1" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" prefWidth="45.0" />
@@ -226,17 +227,13 @@
                      <children>
                         <GridPane layoutX="10.0" layoutY="402.0" prefHeight="95.0" prefWidth="463.0" style="-fx-border-color: black;">
                            <children>
-                              <Button mnemonicParsing="false" text="search" GridPane.columnIndex="2" />
-                              <Label style="-fx-background-color: white;" text="Donator ID">
+                              <Button mnemonicParsing="false" onAction="#searchBooksByDonator" text="search" GridPane.columnIndex="2" />
+                              <Label style="-fx-background-color: white;" text="Donor">
                                  <opaqueInsets>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </opaqueInsets>
                               </Label>
-                              <TextField GridPane.columnIndex="1">
-                                 <padding>
-                                    <Insets top="2.0" />
-                                 </padding>
-                              </TextField>
+                              <ComboBox fx:id="searchBooksByDonorDonorCB" onShown="#onShowSearchBooksByDonors" prefWidth="150.0" GridPane.columnIndex="1" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" prefWidth="45.0" />
@@ -252,9 +249,9 @@
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
                         </Label>
-                        <GridPane layoutX="13.0" layoutY="213.0" prefHeight="149.0" prefWidth="462.0" style="-fx-border-color: black;">
+                        <GridPane layoutX="11.0" layoutY="211.0" prefHeight="145.0" prefWidth="462.0" style="-fx-border-color: black;">
                           <columnConstraints>
-                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="70.0" minWidth="30.0" prefWidth="70.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="70.0" minWidth="30.0" prefWidth="70.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="234.0" />
@@ -265,11 +262,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label prefHeight="56.0" prefWidth="52.0" text="Title" />
-                              <Label text="Author" GridPane.columnIndex="2" />
-                              <TextField GridPane.columnIndex="3" />
-                              <Button mnemonicParsing="false" text="Donate" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <TextField fx:id="donateBooksCopiesTF" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets top="2.0" />
                                  </GridPane.margin>
@@ -278,13 +271,13 @@
                                  </padding>
                               </TextField>
                               <Label text="Copies" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1">
-                                 <padding>
-                                    <Insets top="2.0" />
-                                 </padding>
-                              </TextField>
-                              <Label text="Donator ID" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <Label text="Donor" GridPane.columnIndex="2" />
+                              <ComboBox fx:id="donateBooksBookCB" onShown="#onShowDonateBooks" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="donateBooksDonorCB" onShown="#onShowDonateDonors" prefWidth="150.0" GridPane.columnIndex="3" />
+                              <Label text="Book" />
+                              <Label text="Date" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#donateBooks" text="Donate" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <DatePicker fx:id="donateDateDP" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                         <Label layoutX="26.0" layoutY="200.0" style="-fx-background-color: white;" text="Donate Books">
@@ -295,14 +288,14 @@
                         <GridPane layoutX="15.0" layoutY="27.0" prefHeight="156.0" prefWidth="458.0" style="-fx-border-color: black;">
                            <children>
                               <Label text="Full Name" GridPane.columnIndex="2" />
-                              <TextField GridPane.columnIndex="3" />
-                              <TextField GridPane.columnIndex="1" />
+                              <TextField fx:id="addADonorFullNameTF" GridPane.columnIndex="3" />
+                              <TextField fx:id="addADonorNameTF" GridPane.columnIndex="1" />
                               <Label text="Name" />
                               <Label text="Email" GridPane.rowIndex="1" />
                               <Label text="Phone" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                              <TextField fx:id="addADonorEmailTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="addADonorPhoneTF" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#addADonor" text="Add" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" maxWidth="101.0" minWidth="64.0" prefWidth="50.0" />
@@ -316,7 +309,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Label layoutX="26.0" layoutY="14.0" style="-fx-background-color: white;" text="Add a donator">
+                        <Label layoutX="26.0" layoutY="14.0" style="-fx-background-color: white;" text="Add a donor">
                            <opaqueInsets>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
@@ -332,18 +325,18 @@
                         <GridPane layoutX="17.0" layoutY="49.0" prefHeight="191.0" prefWidth="460.0" style="-fx-border-color: black;">
                            <children>
                               <Label text="Full Name" GridPane.columnIndex="2" />
-                              <TextField GridPane.columnIndex="3" />
-                              <TextField GridPane.columnIndex="1" />
+                              <TextField fx:id="manageAUserFullNameTF" GridPane.columnIndex="3" />
+                              <TextField fx:id="manageAUserUserNameTF" GridPane.columnIndex="1" />
                               <Label text="Name" />
                               <Label text="Email" GridPane.rowIndex="1" />
                               <Label text="Phone" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                              <Button mnemonicParsing="false" text="Update" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                              <Button mnemonicParsing="false" text="Delete" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <TextField fx:id="manageAUserEmailTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="manageAUserPhoneTF" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#addAUser" text="Add" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                              <Button mnemonicParsing="false" onAction="#searchAllUsers" text="Query All" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#deleteAUser" text="Delete" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                               <Label text="Password" GridPane.rowIndex="2" />
-                              <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <PasswordField fx:id="manageAUserPasswordTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" maxWidth="101.0" minWidth="64.0" prefWidth="80.0" />

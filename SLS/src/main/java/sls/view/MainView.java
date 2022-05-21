@@ -32,8 +32,11 @@ import javafx.scene.control.TextArea;
 import javafx.util.StringConverter;
 import sls.model.Book;
 import sls.model.Borrower;
+import sls.model.Donor;
 import sls.presenter.BorrowerPresenter;
 import sls.presenter.BorrowingRecordPresenter;
+import sls.presenter.DonorPresenter;
+import sls.presenter.UserPresenter;
 
 /**
  * FXML Controller class
@@ -45,12 +48,8 @@ public class MainView implements Initializable, IMainView {
     BookPresenter bookPresenter;
     BorrowerPresenter borrowerPresenter;
     BorrowingRecordPresenter borrowingRecordPresenter;
-
-    @FXML
-    private Button searchBooksByTitleBtn;
-
-    @FXML
-    private Button addBookBtn;
+    DonorPresenter donorPresenter;
+    UserPresenter userPresenter;
 
     @FXML
     private TextField addABorrowerEmailTF;
@@ -59,13 +58,22 @@ public class MainView implements Initializable, IMainView {
     private TextField addABookAuthorTF;
 
     @FXML
+    private TextField donateBooksCopiesTF;
+
+    @FXML
     private TextField searchBooksByAuthorTF;
 
     @FXML
     private TextField searchBooksByTitleTF;
 
     @FXML
-    private Button searchBooksByAuthorBtn;
+    private TextField addADonorNameTF;
+    @FXML
+    private TextField addADonorFullNameTF;
+    @FXML
+    private TextField addADonorEmailTF;
+    @FXML
+    private TextField addADonorPhoneTF;
 
     @FXML
     private TextField addABorrowerPhoneTF;
@@ -77,16 +85,18 @@ public class MainView implements Initializable, IMainView {
     private TextField addABorrowerNameTF;
 
     @FXML
-    private Button overdueReturnsBtn;
-
+    private TextField manageAUserUserNameTF;
     @FXML
-    private Button issuedBooks;
+    private TextField manageAUserPasswordTF;
+    @FXML
+    private TextField manageAUserFullNameTF;
+    @FXML
+    private TextField manageAUserPhoneTF;
+    @FXML
+    private TextField manageAUserEmailTF;
 
     @FXML
     private TextArea textArea;
-
-    @FXML
-    private Button addABorrowerBtn;
 
     @FXML
     private ComboBox<Book> borrowABookBookCB;
@@ -95,6 +105,15 @@ public class MainView implements Initializable, IMainView {
     @FXML
     private ComboBox<Borrower> returnABookBorrowerCB;
     @FXML
+    private ComboBox<Borrower> searchAllBooksByBorrowerBorrowerCB;
+    @FXML
+    private ComboBox<Book> donateBooksBookCB;
+    @FXML
+    private ComboBox<Donor> donateBooksDonorCB;
+    @FXML
+    private ComboBox<Donor> searchBooksByDonorDonorCB;
+
+    @FXML
     private ComboBox<Book> returnABookBookCB;
 
     @FXML
@@ -102,6 +121,9 @@ public class MainView implements Initializable, IMainView {
 
     @FXML
     private DatePicker returnDateDP;
+
+    @FXML
+    private DatePicker donateDateDP;
 
     @FXML
     void addABorrower(ActionEvent event) {
@@ -119,8 +141,8 @@ public class MainView implements Initializable, IMainView {
     }
 
     @FXML
-    void getIssuedBooks(ActionEvent event) {
-        bookPresenter.getIssuedBooks();
+    void searchIssuedBooks(ActionEvent event) {
+        bookPresenter.searchIssuedBooks();
     }
 
     @FXML
@@ -176,10 +198,59 @@ public class MainView implements Initializable, IMainView {
     }
 
     @FXML
-    void onShowAllBorrowers(Event event) {
+    void onShowBorrowedBooksByBorrower(Event event) {
+        Borrower borrower = returnABookBorrowerCB.getValue();
+        //Not select borrrower Id
+        if (borrower == null) {
+            ObservableList<Book> books = bookPresenter.getIssueddBooks();
+            updateBookOptions(books, returnABookBookCB);
+        } else {
+            ObservableList<Book> books = bookPresenter.getIssuedBooksByBorrower(borrower);
+            updateBookOptions(books, returnABookBookCB);
+        }
+
+    }
+
+    @FXML
+    void onShowDonateBooks(Event e) {
+        ObservableList<Book> books = bookPresenter.getAllBooks();
+        updateBookOptions(books, donateBooksBookCB);
+    }
+
+    @FXML
+    void onShowDonateDonors(Event e) {
+        ObservableList<Donor> books = donorPresenter.getAllDonors();
+        updateDonorOptions(books, donateBooksDonorCB);
+    }
+
+    @FXML
+    void onShowSearchBooksByDonors(Event e) {
+        ObservableList<Donor> books = donorPresenter.getAllDonors();
+        updateDonorOptions(books, searchBooksByDonorDonorCB);
+    }
+
+    /**
+     * onShowAllBorrowers for borrowing a book
+     *
+     * @param event
+     */
+    @FXML
+    void onShowAllBorrowersBAB(Event event) {
 
         ObservableList<Borrower> borrowers = borrowerPresenter.getAllBorrowers();
         updateBorrowerOptions(borrowers, borrowABookBorrowerCB);
+    }
+
+    /**
+     * onShowAllBorrowers for searching books by a borrower
+     *
+     * @param event
+     */
+    @FXML
+    void onShowAllBorrowersSBB(Event event) {
+
+        ObservableList<Borrower> borrowers = borrowerPresenter.getAllBorrowers();
+        updateBorrowerOptions(borrowers, searchAllBooksByBorrowerBorrowerCB);
     }
 
     @FXML
@@ -239,9 +310,100 @@ public class MainView implements Initializable, IMainView {
             promptMessage("Borrower must be selected");
             return;
         }
-
         borrowingRecordPresenter.returnABook(book, borrower);
+    }
 
+    @FXML
+    void addADonor(ActionEvent e) {
+
+        if (isEmpty(addADonorNameTF) || isEmpty(addADonorFullNameTF) || isEmpty(addADonorEmailTF) || isEmpty(addADonorPhoneTF)) {
+            return;
+        }
+        donorPresenter.addADonor(addADonorNameTF.getText(), addADonorFullNameTF.getText(), addADonorEmailTF.getText(), addADonorPhoneTF.getText());
+    }
+
+    @FXML
+    void donateBooks(ActionEvent e) {
+        Book book = donateBooksBookCB.getValue();
+        Donor donor = donateBooksDonorCB.getValue();
+        if (book == null) {
+            promptMessage("Book must be selected");
+            return;
+        }
+        if (donor == null) {
+            promptMessage("Donor must be selected");
+            return;
+        }
+        if (donateDateDP.getValue() == null) {
+            promptMessage("Donate date must be selected");
+            return;
+        }
+
+        if (isEmpty(donateBooksCopiesTF)) {
+            return;
+        }
+        if (!validateNumber(donateBooksCopiesTF)) {
+            return;
+        }
+
+        int copies = Integer.parseInt(donateBooksCopiesTF.getText());
+        if (copies < 1) {
+            promptMessage("Copies must be larger than 0");
+            return;
+        }
+        LocalDate localDate = donateDateDP.getValue();
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        Date donateDate = Date.from(instant);
+
+        donorPresenter.donateBooks(donor, book, copies, donateDate);
+
+    }
+
+    @FXML
+    void searchIssuedBookByBorrower(ActionEvent e) {
+        Borrower borrower = searchAllBooksByBorrowerBorrowerCB.getValue();
+        if (borrower == null) {
+            promptMessage("Borrower must be selected");
+            return;
+        }
+        bookPresenter.searchIssuedBooksByBorrower(borrower);
+    }
+
+    @FXML
+    void searchBooksByDonator(ActionEvent e) {
+        Donor donor = searchBooksByDonorDonorCB.getValue();
+        if (donor == null) {
+            promptMessage("Donor must be selected");
+            return;
+        }
+        bookPresenter.searchBooksByDonor(donor);
+    }
+
+    @FXML
+    void addAUser(ActionEvent e) {
+        if (isEmpty(manageAUserUserNameTF) || isEmpty(manageAUserPasswordTF) || isEmpty(manageAUserFullNameTF)
+                || isEmpty(manageAUserEmailTF) || isEmpty(manageAUserPhoneTF)) {
+            return;
+        }
+        if (!validatePassword(manageAUserPasswordTF)) {
+            return;
+        }
+        userPresenter.addAUser(manageAUserUserNameTF.getText(), manageAUserPasswordTF.getText(),
+                manageAUserFullNameTF.getText(), manageAUserEmailTF.getText(), manageAUserPhoneTF.getText());
+
+    }
+
+    @FXML
+    void searchAllUsers() {
+        userPresenter.searchAllUsers();
+    }
+
+    @FXML
+    void deleteAUser() {
+        if (isEmpty(manageAUserUserNameTF)) {
+            return;
+        }
+        userPresenter.deleteAUser(manageAUserUserNameTF.getText());
     }
 
     void updateBookOptions(ObservableList<Book> books, ComboBox<Book> cb) {
@@ -256,6 +418,27 @@ public class MainView implements Initializable, IMainView {
             public Book fromString(String string) {
                 return books.stream().filter(ap
                         -> ap.getId().equals(string)).findFirst().orElse(null);
+            }
+        });
+    }
+
+    void updateDonorOptions(ObservableList<Donor> donors, ComboBox<Donor> cb) {
+        cb.setItems(donors);
+        cb.setConverter(new StringConverter<Donor>() {
+            @Override
+            public String toString(Donor object) {
+                return object.getName() + ":" + object.getId();
+            }
+
+            @Override
+            public Donor fromString(String string) {
+                String vs[] = string.split(":");
+                if (vs.length != 2) {
+                    return null;
+                }
+                Long id = Long.parseLong(vs[1]);
+                return donors.stream().filter(ap
+                        -> ap.getId() == (id)).findFirst().orElse(null);
             }
         });
     }
@@ -291,6 +474,47 @@ public class MainView implements Initializable, IMainView {
         return false;
     }
 
+    private boolean validatePassword(TextField tf) {
+        String password = tf.getText();
+        //If the length is less than 8, return false;
+        if (password.length() != 8) {
+            promptMessage("The length of the password must be 8");
+            return false;
+        }
+        boolean containNumber = false;
+        boolean containLetter = false;
+        for (byte b : password.getBytes()) {
+            if (('a' <= b && b <= 'z') || ('A' <= b && b <= 'Z')) {
+                containLetter = true;
+            }
+            if (('0' <= b && b <= '9')) {
+                containNumber = true;
+            }
+        }
+        if (!containLetter) {
+            promptMessage("Password must contain letters");
+            return false;
+        }
+        if (!containNumber) {
+            promptMessage("Password must contain numbers");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateNumber(TextField tf) {
+        String v = tf.getText();
+        try {
+            Integer.parseInt(v);
+        } catch (NumberFormatException n) {
+            promptMessage("Text field should be an integer!");
+            tf.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Initializes the controller class.
      */
@@ -299,10 +523,12 @@ public class MainView implements Initializable, IMainView {
     }
 
     @Override
-    public void bind(BookPresenter bookPresenter, BorrowerPresenter borrowerPresenter, BorrowingRecordPresenter borrowingRecordPresenter) {
+    public void bind(BookPresenter bookPresenter, BorrowerPresenter borrowerPresenter, BorrowingRecordPresenter borrowingRecordPresenter, DonorPresenter donorPresenter, UserPresenter userPresenter) {
         this.bookPresenter = bookPresenter;
         this.borrowerPresenter = borrowerPresenter;
         this.borrowingRecordPresenter = borrowingRecordPresenter;
+        this.donorPresenter = donorPresenter;
+        this.userPresenter = userPresenter;
     }
 
     @Override

@@ -35,22 +35,22 @@ public class BorrowingRecordPresenter {
     public void IssueABook(Book book, Borrower borrower, Date issuedDate, Date returnDate) {
         //No copies avaliable
         if (book.getCopies() - book.getBorrowedCount() < 1) {
-            mainView.appendTextArea("Error, not enough copies:");
+            mainView.appendTextArea("\nError, not enough copies:");
             mainView.appendTextArea(book.toString());
             return;
         }
         book.setBorrowedCount(book.getBorrowedCount() + 1);
         Book nBook = bookModel.updateBorrowedCount(book);
         if (nBook == null) {
-            mainView.appendTextArea("Issuing a book failed");
+            mainView.appendTextArea("\nIssuing a book failed");
             return;
         }
 
         BorrowingRecord br = borrowingRecordModel.issueABook(nBook, borrower, issuedDate, returnDate);
         if (br == null) {
-            mainView.appendTextArea("Issuing a book failed");
+            mainView.appendTextArea("\nIssuing a book failed");
         } else {
-            mainView.appendTextArea("Issuing a book successfully:");
+            mainView.appendTextArea("\nIssuing a book successfully:");
             mainView.appendTextArea(br.toString());
         }
 
@@ -62,12 +62,12 @@ public class BorrowingRecordPresenter {
             book.setBorrowedCount(book.getBorrowedCount() - 1);
             Book nBook = bookModel.updateBorrowedCount(book);
             if (nBook != null) {
-                mainView.appendTextArea("Recturning a book successfully");
+                mainView.appendTextArea("\nRecturning a book:"+book.getTitle()+" by "+borrower.getName()+" successfully");
                 return;
             }
 
         }
-        mainView.appendTextArea("Recturning a book failed");
+        mainView.appendTextArea("\nRecturning a book " +book.getTitle()+" by "+borrower.getName()+" failed");
 
     }
 
