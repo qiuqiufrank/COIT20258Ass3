@@ -27,6 +27,8 @@ public interface IBookModel {
 
     public List<Book> getAllIssuedBooks();
 
+    public List<Book> getAllOverdueBooks();
+
     public List<Book> getAllBooks();
 
     public Book updateBorrowedCount(Book book);

@@ -27,16 +27,15 @@ public class BookModel implements IBookModel {
     private PreparedStatement allOverdueReturnStatement;
     private PreparedStatement allAvailableBooksStatement;
     private PreparedStatement allBooksStatement;
-   
 
     private PreparedStatement queryByTitleStatement;
     private PreparedStatement queryByAuthorStatement;
     private PreparedStatement queryByTitleAndAuthorStatement;
     private PreparedStatement queryByDonorStatement;
     private PreparedStatement queryIssuedBooksByBorrowerStatement;
-    
+
     private PreparedStatement updateBorrowedCountStatement;
-     private PreparedStatement updateCopiesStatement;
+    private PreparedStatement updateCopiesStatement;
 
     public BookModel(Connection connection) {
         this.connection = connection;
@@ -62,6 +61,9 @@ public class BookModel implements IBookModel {
             allIssuedBookStatement = connection.prepareStatement(
                     "SELECT * FROM Book where BorrowedCount>0 "
             );
+
+            allOverdueReturnStatement = connection.prepareStatement("select * from Book where Id in "
+                    + "(select DISTINCT BookId  FROM BorrowingRecord where ExpectedReturn < NOW() and returned =false);");
 
             allAvailableBooksStatement = connection.prepareStatement(
                     "SELECT * FROM Book where (Copies-BorrowedCount)>0 "
@@ -131,6 +133,17 @@ public class BookModel implements IBookModel {
         try {
             queryByTitleStatement.setString(1, title);
             ResultSet resultSet = queryByTitleStatement.executeQuery();
+            return parseBooks(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<Book>();
+    }
+
+    @Override
+    public List<Book> getAllOverdueBooks() {
+        try {
+            ResultSet resultSet = allOverdueReturnStatement.executeQuery();
             return parseBooks(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();

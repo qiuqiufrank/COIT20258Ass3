@@ -15,6 +15,8 @@ import sls.presenter.LoginPresenter;
 import sls.view.LoginView;
 import sls.view.MainView;
 import java.sql.Connection;
+import java.sql.SQLException;
+import javafx.scene.control.Alert;
 import sls.model.BorrowerModel;
 import sls.model.BorrowingRecordModel;
 import sls.model.DonationRecord;
@@ -38,7 +40,19 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
 //        System.out.println(UserType.Borrower);
 
-        Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        Connection connection;
+        try {
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText("Can not connected to database, software will exit");
+            alert.show();
+            return;
+
+        }
 
         FXMLLoader lloader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
         Parent loginRoot = lloader.load();
@@ -58,21 +72,21 @@ public class MainApp extends Application {
         BorrowingRecordModel borrowingRecordModel = new BorrowingRecordModel(connection);
         DonorModel donorModel = new DonorModel(connection);
         DonationRecordModel donationRecordModel = new DonationRecordModel(connection);
-       
 
         LoginPresenter loginPresenter = new LoginPresenter();
         BorrowerPresenter borrowerPresenter = new BorrowerPresenter(borrowerModel, mainView);
         BookPresenter bookPresenter = new BookPresenter(bookModel, mainView);
         BorrowingRecordPresenter borrowingRecordPresenter = new BorrowingRecordPresenter(borrowingRecordModel, bookModel, mainView);
-        DonorPresenter donorPresenter = new DonorPresenter( donorModel, donationRecordModel,bookModel, mainView);
-        UserPresenter userPresenter=new UserPresenter(userModel, mainView);
-        
-        mainView.bind(bookPresenter, borrowerPresenter, borrowingRecordPresenter, donorPresenter,userPresenter);
+        DonorPresenter donorPresenter = new DonorPresenter(donorModel, donationRecordModel, bookModel, mainView);
+        UserPresenter userPresenter = new UserPresenter(userModel, mainView);
+
+        mainView.bind(bookPresenter, borrowerPresenter, borrowingRecordPresenter, donorPresenter, userPresenter);
         loginView.bind(loginPresenter);
-        loginPresenter.bind(stage, userModel, mainScene);
+        loginPresenter.bind(stage, userModel, mainScene, loginView, mainView);
 
         stage.setTitle("OLMC Spiritual Library System");
-        stage.setScene(mainScene);
+        stage.setScene(loginScene);
+        // stage.setScene(mainScene);
         stage.show();
     }
 

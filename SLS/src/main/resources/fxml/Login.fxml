@@ -14,11 +14,11 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="120.0" layoutY="144.0" text="Name" />
-      <PasswordField fx:id="passwordTF" layoutX="216.0" layoutY="211.0" />
       <TextField fx:id="nameTF" layoutX="216.0" layoutY="138.0" />
+      <PasswordField fx:id="passwordTF" layoutX="216.0" layoutY="211.0" />
       <Label layoutX="120.0" layoutY="223.0" text="Password" />
       <Button fx:id="loginBtn" layoutX="291.0" layoutY="298.0" mnemonicParsing="false" onAction="#loginAction" text="Log in" />
       <Button fx:id="exitBtn" layoutX="388.0" layoutY="298.0" mnemonicParsing="false" onAction="#exitAction" text="Exit" />
+      <Label layoutX="120.0" layoutY="144.0" text="Name" />
    </children>
 </AnchorPane>

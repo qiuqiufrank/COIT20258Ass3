@@ -80,6 +80,16 @@ public class BookPresenter {
         }
     }
 
+    public void searchOverdueBooks() {
+        List<Book> books = bookModel.getAllOverdueBooks();
+        if (books.size() > 0) {
+            mainView.appendTextArea("\nGet all overdue books, found " + books.size() + " books:");
+            mainView.appendTextArea(booksToString(books));
+        } else {
+            mainView.appendTextArea("\nOverdue books are not found");
+        }
+    }
+
     public void searchIssuedBooksByBorrower(Borrower borrower) {
         List<Book> books = bookModel.searchIssuedBooksByBorrower(borrower.getId());
         if (books.size() > 0) {
@@ -89,13 +99,14 @@ public class BookPresenter {
             mainView.appendTextArea("\nIssued books borrowed by " + borrower.getName() + " are not found");
         }
     }
-        public void searchBooksByDonor(Donor donor) {
+
+    public void searchBooksByDonor(Donor donor) {
         List<Book> books = bookModel.searchBooksByDonor(donor.getId());
         if (books.size() > 0) {
             mainView.appendTextArea("\nGet all books donated by " + donor.getName() + ", found " + books.size() + " books:");
             mainView.appendTextArea(booksToString(books));
         } else {
-            mainView.appendTextArea("\n"+donor.getName() + " did not donate any book");
+            mainView.appendTextArea("\n" + donor.getName() + " did not donate any book");
         }
     }
 

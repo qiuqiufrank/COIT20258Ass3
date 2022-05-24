@@ -37,7 +37,7 @@ public class UserModel implements IUserModel {
                     "SELECT * FROM User"
             );
             queryByUserNameAndPasswordStatement = connection.prepareStatement(
-                    "SELECT * FROM Book where UserName=? and Password=?"
+                    "SELECT * FROM User where UserName=? and Password=?"
             );
 //            updateUserStatement = connection.prepareStatement(
 //                    "UPDATE User SET Password=? FullName=? email=? phoneNumber=? isAdmin=? where UserName=?"

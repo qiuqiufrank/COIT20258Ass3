@@ -75,4 +75,10 @@ CREATE TABLE BorrowingRecord
     CONSTRAINT FK_BorrowingRecordBook FOREIGN KEY (BookId) REFERENCES Book(Id)
 );
 
+-- create users to login in
+INSERT INTO User(UserName, Password,FullName ,Email ,PhoneNumber ,isAdmin )
+VALUES ("admin","1234567a","fn1","email1@test.com","123456789",true),
+("librarian","1234567b","fn2","email2@test.com","223456876",false)
+;
+
 

@@ -9,20 +9,16 @@ import sls.presenter.BookPresenter;
 import sls.presenter.BorrowerPresenter;
 import sls.presenter.BorrowingRecordPresenter;
 import sls.presenter.DonorPresenter;
+import sls.presenter.LoginPresenter;
 import sls.presenter.UserPresenter;
 
 /**
  *
  * @author Faqiu Sun
  */
-public interface IMainView {
+public interface ILoginView {
 
-    public void bind(BookPresenter bookPresenter, BorrowerPresenter borrowerPresenter, BorrowingRecordPresenter borrowingRecordPresenter, DonorPresenter donorPresenter, UserPresenter userPresenter);
-
-    public void appendTextArea(String m);
+    public void bind(LoginPresenter loginPresenter);
 
     public void promptMessage(String m);
-    
-    //If the user is not the main librarian, the user tab will be disabed
-    public void disableUserTab(boolean disable);
 }

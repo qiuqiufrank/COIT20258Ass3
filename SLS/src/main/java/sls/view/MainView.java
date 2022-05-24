@@ -5,6 +5,7 @@
  */
 package sls.view;
 
+
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.Tab;
 import sls.presenter.BookPresenter;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
@@ -124,6 +126,9 @@ public class MainView implements Initializable, IMainView {
 
     @FXML
     private DatePicker donateDateDP;
+
+    @FXML
+    private Tab userTab;
 
     @FXML
     void addABorrower(ActionEvent event) {
@@ -320,6 +325,11 @@ public class MainView implements Initializable, IMainView {
             return;
         }
         donorPresenter.addADonor(addADonorNameTF.getText(), addADonorFullNameTF.getText(), addADonorEmailTF.getText(), addADonorPhoneTF.getText());
+    }
+
+    @FXML
+    void searchOverdueReturns(ActionEvent e) {
+        bookPresenter.searchOverdueBooks();
     }
 
     @FXML
@@ -520,6 +530,13 @@ public class MainView implements Initializable, IMainView {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+    }
+
+    @Override
+    public void disableUserTab(boolean disable) {
+
+        userTab.setDisable(true);
     }
 
     @Override

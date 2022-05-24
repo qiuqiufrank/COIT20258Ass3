@@ -8,10 +8,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="628.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sls.view.MainView">
+<AnchorPane id="AnchorPane" prefHeight="628.0" prefWidth="951.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sls.view.MainView">
    <children>
-      <TextArea fx:id="textArea" layoutX="5.0" layoutY="5.0" prefHeight="622.0" prefWidth="291.0" />
-      <TabPane layoutX="303.0" layoutY="6.0" prefHeight="622.0" prefWidth="505.0" tabClosingPolicy="UNAVAILABLE">
+      <TextArea fx:id="textArea" layoutX="4.0" layoutY="5.0" prefHeight="622.0" prefWidth="425.0" wrapText="true" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="522.0" AnchorPane.topAnchor="5.0" />
+      <TabPane layoutX="432.0" layoutY="5.0" prefHeight="622.0" prefWidth="505.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.rightAnchor="5.0">
         <tabs>
           <Tab text="Book">
             <content>
@@ -20,7 +20,7 @@
                         <GridPane layoutX="15.0" layoutY="358.0" prefHeight="102.0" prefWidth="469.0" style="-fx-border-color: black;">
                            <children>
                               <Button fx:id="issuedBooks" mnemonicParsing="false" onAction="#searchIssuedBooks" text="Issued Books" />
-                              <Button fx:id="overdueReturnsBtn" mnemonicParsing="false" onAction="#getOverdueReturns" text="Overdue Returns" GridPane.columnIndex="1" />
+                              <Button fx:id="overdueReturnsBtn" mnemonicParsing="false" onAction="#searchOverdueReturns" text="Overdue Returns" GridPane.columnIndex="1" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" />
@@ -37,20 +37,20 @@
                         </Label>
                         <GridPane layoutX="14.0" layoutY="184.0" prefHeight="136.0" prefWidth="470.0" style="-fx-border-color: black;">
                            <children>
-                              <Button mnemonicParsing="false" text="Title" />
                               <Button fx:id="searchBooksByTitleBtn" mnemonicParsing="false" onAction="#searchBooksByTitle" text="Search" GridPane.columnIndex="2" />
                               <TextField fx:id="searchBooksByTitleTF" GridPane.columnIndex="1">
                                  <padding>
                                     <Insets top="2.0" />
                                  </padding>
                               </TextField>
-                              <Button mnemonicParsing="false" text="Author" GridPane.rowIndex="1" />
                               <TextField fx:id="searchBooksByAuthorTF" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets top="2.0" />
                                  </padding>
                               </TextField>
                               <Button fx:id="searchBooksByAuthorBtn" mnemonicParsing="false" onAction="#searchBooksByAuthor" text="Search" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Label text="Title" />
+                              <Label text="Author" GridPane.rowIndex="1" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" />
@@ -69,13 +69,11 @@
                         </Label>
                         <GridPane layoutX="16.0" layoutY="28.0" prefHeight="115.0" prefWidth="470.0" style="-fx-border-color: black;">
                            <children>
-                              <Button mnemonicParsing="false" text="Title" />
                               <TextField fx:id="addABookTitleTF" GridPane.columnIndex="1">
                                  <padding>
                                     <Insets top="2.0" />
                                  </padding>
                               </TextField>
-                              <Button mnemonicParsing="false" text="Author" GridPane.rowIndex="1" />
                               <TextField fx:id="addABookAuthorTF" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets top="2.0" />
@@ -83,6 +81,8 @@
                               </TextField>
                               <Button fx:id="addBookBtn" mnemonicParsing="false" onAction="#addABook" text="Add" GridPane.columnIndex="2" />
                               <Button mnemonicParsing="false" text="Delete" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Label text="Title" />
+                              <Label text="Author" GridPane.rowIndex="1" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" />
@@ -159,7 +159,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Label layoutX="24.0" layoutY="313.0" style="-fx-background-color: white;" text="Return a borrowed book">
+                        <Label layoutX="38.0" layoutY="306.0" style="-fx-background-color: white;" text="Return a borrowed book">
                            <opaqueInsets>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
@@ -193,7 +193,7 @@
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
                         </Label>
-                        <GridPane layoutX="24.0" layoutY="463.0" prefHeight="80.0" prefWidth="444.0" style="-fx-border-color: black;">
+                        <GridPane layoutX="19.0" layoutY="463.0" prefHeight="80.0" prefWidth="449.0" style="-fx-border-color: black;">
                            <children>
                               <Button mnemonicParsing="false" onAction="#searchIssuedBookByBorrower" text="Search" GridPane.columnIndex="2" />
                               <Label style="-fx-background-color: white;" text="Borrower">
@@ -318,7 +318,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="User">
+            <Tab fx:id="userTab" text="User">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
