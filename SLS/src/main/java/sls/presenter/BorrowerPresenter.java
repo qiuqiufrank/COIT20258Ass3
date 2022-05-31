@@ -16,6 +16,7 @@ import sls.view.IMainView;
 /**
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class BorrowerPresenter {
 
@@ -26,7 +27,10 @@ public class BorrowerPresenter {
         this.borrowerModel = borrowerModel;
         this.mainView = mainView;
     }
-
+/**
+ * 
+ * @return All the borrowers
+ */
     public ObservableList<Borrower> getAllBorrowers() {
         List<Borrower> borrowers = borrowerModel.getAllBorrowers();
         ObservableList<Borrower> obs = FXCollections.observableArrayList();
@@ -35,6 +39,10 @@ public class BorrowerPresenter {
         }
         return obs;
     }
+    /**
+     * 
+     * @return Return observable of all the borrowers
+     */
         public ObservableList<Borrower> getAllIssuedBorrowers() {
         List<Borrower> borrowers = borrowerModel.getAllIssuedBorrowers();
         ObservableList<Borrower> obs = FXCollections.observableArrayList();
@@ -43,7 +51,14 @@ public class BorrowerPresenter {
         }
         return obs;
     }
-
+/**
+ * 
+ * @param name
+ * @param phone
+ * @param email 
+ * 
+ * This will add a new borrower
+ */
     public void addABorrower(String name, String phone, String email) {
         Borrower borrower = borrowerModel.addABorrower(name, phone, email);
         if (borrower == null) {
@@ -53,19 +68,31 @@ public class BorrowerPresenter {
             mainView.appendTextArea(borrower.toString());
         }
     }
-
+/**
+ * 
+ * @return The set borrower model
+ */
     public IBorrowerModel getBorrowerModel() {
         return borrowerModel;
     }
-
+/**
+ * Set the borrower model
+ * @param borrowerModel 
+ */
     public void setBorrowerModel(IBorrowerModel borrowerModel) {
         this.borrowerModel = borrowerModel;
     }
-
+/**
+ * 
+ * @return The main view to be used 
+ */
     public IMainView getMainView() {
         return mainView;
     }
-
+/**
+ * 
+ * @param mainView Initialize the main view
+ */
     public void setMainView(IMainView mainView) {
         this.mainView = mainView;
     }

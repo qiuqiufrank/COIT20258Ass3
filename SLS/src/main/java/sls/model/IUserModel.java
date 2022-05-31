@@ -8,8 +8,9 @@ package sls.model;
 import java.util.List;
 
 /**
- *
+ *To be implemented by User model
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public interface IUserModel {
 

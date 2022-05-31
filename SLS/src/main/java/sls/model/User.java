@@ -6,8 +6,9 @@
 package sls.model;
 
 /**
- *
+ * USer getter setter constructor
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class User {
 

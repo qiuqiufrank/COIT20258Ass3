@@ -8,8 +8,9 @@ package sls.model;
 import java.util.List;
 
 /**
- *
+ * To be implemented by Donor model
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public interface IDonorModel {
 

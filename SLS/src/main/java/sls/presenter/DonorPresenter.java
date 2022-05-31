@@ -18,8 +18,9 @@ import sls.model.IDonorModel;
 import sls.view.IMainView;
 
 /**
- *
+ * This class handless the Donors presenter
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class DonorPresenter {
 
@@ -34,7 +35,14 @@ public class DonorPresenter {
         this.bookModel = bookModel;
         this.mainView = mainView;
     }
-
+/**
+ * 
+ * @param name
+ * @param fullName
+ * @param email
+ * @param phone 
+ * This will add a donor with all the details
+ */
     public void addADonor(String name, String fullName, String email, String phone) {
 
         Donor donor = donorModel.addNewDonor(name, fullName, email, phone);
@@ -45,7 +53,10 @@ public class DonorPresenter {
             mainView.appendTextArea(donor.toString());
         }
     }
-
+/**
+ * 
+ * @return An observable list of all donors
+ */
     public ObservableList<Donor> getAllDonors() {
         List<Donor> donors = donorModel.getAllDonors();
         ObservableList<Donor> ods = FXCollections.observableArrayList();
@@ -54,7 +65,13 @@ public class DonorPresenter {
         }
         return ods;
     }
-
+/**
+ * 
+ * @param donor Name of the donor 
+ * @param book Book being donated
+ * @param copies Total number of the copies
+ * @param donationDate Date of donation
+ */
     public void donateBooks(Donor donor, Book book, int copies, Date donationDate) {
         DonationRecord dr = donationRecordModel.donateBooks(donor.getId(), book.getId(), copies, donationDate);
 

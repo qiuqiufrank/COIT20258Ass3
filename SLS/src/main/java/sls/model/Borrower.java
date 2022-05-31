@@ -6,8 +6,9 @@
 package sls.model;
 
 /**
- *
+ * Borrower Getter and setter
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class Borrower {
 

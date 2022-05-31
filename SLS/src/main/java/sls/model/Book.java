@@ -8,6 +8,8 @@ package sls.model;
 /**
  *
  * @author Faqiu Sun
+ * @edited Hirvi
+ * Book getter and setter
  */
 public class Book {
     private String id;

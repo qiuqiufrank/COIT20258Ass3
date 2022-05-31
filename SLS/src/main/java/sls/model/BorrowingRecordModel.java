@@ -14,8 +14,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * DB manipulator for BorrowingRecordModel
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class BorrowingRecordModel implements IBorrowingRecordModel {
 
@@ -23,8 +25,10 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
     private Connection connection;
     private PreparedStatement issueABookStatement;
     private PreparedStatement returnABookStatement;
-  
-
+/**
+ * Return the book and issuing a book 
+ * @param connection 
+ */
     public BorrowingRecordModel(Connection connection) {
         this.connection = connection;
         try {
@@ -42,6 +46,14 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
         }
     }
 
+    /**
+     *
+     * @param book
+     * @param borrower
+     * @param issuedDate
+     * @param expectedReturn
+     * @return This will issue a book present in the db and make corresponding changes to the db 
+     */
     @Override
     public BorrowingRecord issueABook(Book book, Borrower borrower, Date issuedDate, Date expectedReturn) {
         try {
@@ -68,6 +80,12 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
         return null;
     }
 
+    /**
+     *
+     * @param book
+     * @param borrower
+     * @return Update the book db by returning the book.
+     */
     @Override
     public int returnABook(Book book, Borrower borrower) {
         try {

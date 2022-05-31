@@ -19,6 +19,8 @@ import sls.view.IMainView;
 /**
  *
  * @author Faqiu Sun
+ * @edited Hirvi
+ * The borrowing Record presenter
  */
 public class BorrowingRecordPresenter {
 
@@ -31,7 +33,15 @@ public class BorrowingRecordPresenter {
         this.bookModel = bookModel;
         this.mainView = mainView;
     }
-
+/**
+ * 
+ * @param book The book to be issued
+ * @param borrower The borrower who is taking the book
+ * @param issuedDate The date of issuing
+ * @param returnDate Expected return date
+ * This will issue a new book to a borrower
+ * 
+ */
     public void IssueABook(Book book, Borrower borrower, Date issuedDate, Date returnDate) {
         //No copies avaliable
         if (book.getCopies() - book.getBorrowedCount() < 1) {
@@ -55,7 +65,11 @@ public class BorrowingRecordPresenter {
         }
 
     }
-
+/**
+ * 
+ * @param book This will add the book to available in the DB
+ * @param borrower The borrower who is returning the book.
+ */
     public void returnABook(Book book, Borrower borrower) {
         if (borrowingRecordModel.returnABook(book, borrower) > 0) {
 

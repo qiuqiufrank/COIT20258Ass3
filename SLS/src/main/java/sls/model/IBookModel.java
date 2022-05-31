@@ -8,8 +8,9 @@ package sls.model;
 import java.util.List;
 
 /**
- *
+ * To be implemented by book model
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public interface IBookModel {
 
