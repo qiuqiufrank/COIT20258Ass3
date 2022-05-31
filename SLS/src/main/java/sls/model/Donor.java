@@ -6,8 +6,9 @@
 package sls.model;
 
 /**
- *
+ * Donor getter setter,constructor
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class Donor {
 

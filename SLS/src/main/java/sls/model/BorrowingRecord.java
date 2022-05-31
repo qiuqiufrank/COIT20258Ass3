@@ -8,8 +8,10 @@ package sls.model;
 import java.util.Date;
 
 /**
+ * BorrowingRecord getter and setter ,constructor
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class BorrowingRecord {
 
@@ -79,10 +81,7 @@ public class BorrowingRecord {
     @Override
     public String toString() {
         return String.format("Borrowing Record Id:%d, issued date:%s, expected return date:%s, book name:%s, borrower:%s, returned:%s",
-                id,issueDate.toString(),expectedReturnDate.toString(),book.getTitle(),borrower.getName(),returned?"yes":"no");
+                id, issueDate.toString(), expectedReturnDate.toString(), book.getTitle(), borrower.getName(), returned ? "yes" : "no");
     }
 
-    
-    
-   
 }

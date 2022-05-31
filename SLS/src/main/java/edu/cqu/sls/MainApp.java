@@ -27,6 +27,12 @@ import sls.presenter.BorrowingRecordPresenter;
 import sls.presenter.DonorPresenter;
 import sls.presenter.UserPresenter;
 
+/**
+ * 
+ * @author Faqiu Sun
+ * @edited Hirvi
+ */
+
 public class MainApp extends Application {
 
     //Mysql url
@@ -34,7 +40,7 @@ public class MainApp extends Application {
     //Mysql username
     private static final String USERNAME = "root";
     //Mysql password
-    private static final String PASSWORD = "mypassword";
+    private static final String PASSWORD = "root";
 
     @Override
     public void start(Stage stage) throws Exception {

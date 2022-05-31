@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This is a DB interaction for Books
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class BookModel implements IBookModel {
 
@@ -37,6 +39,10 @@ public class BookModel implements IBookModel {
     private PreparedStatement updateBorrowedCountStatement;
     private PreparedStatement updateCopiesStatement;
 
+    /**
+     *
+     * @param connection Select all statements by condition
+     */
     public BookModel(Connection connection) {
         this.connection = connection;
         try {
@@ -91,6 +97,12 @@ public class BookModel implements IBookModel {
 
     }
 
+    /**
+     *
+     * @param title
+     * @param author
+     * @return Add a new book to the DB
+     */
     @Override
     public Book addNewBook(String title, String author) {
         try {
@@ -107,7 +119,11 @@ public class BookModel implements IBookModel {
         }
         return null;
     }
-
+/**
+ * 
+ * @param resultSet
+ * @return The list of books from executed query that has given result set
+ */
     private List<Book> parseBooks(ResultSet resultSet) {
         try {
             List<Book> results = new ArrayList<Book>();
@@ -127,7 +143,11 @@ public class BookModel implements IBookModel {
         }
         return new ArrayList<Book>();
     }
-
+/**
+ * 
+ * @param title To be searched with
+ * @return All the books with the given title
+ */
     @Override
     public List<Book> searchByTitle(String title) {
         try {
@@ -139,7 +159,10 @@ public class BookModel implements IBookModel {
         }
         return new ArrayList<Book>();
     }
-
+/**
+ * 
+ * @return All the books that or overdue from the date of return 
+ */
     @Override
     public List<Book> getAllOverdueBooks() {
         try {
@@ -150,7 +173,11 @@ public class BookModel implements IBookModel {
         }
         return new ArrayList<Book>();
     }
-
+/**
+ * 
+ * @param author To be searched with author
+ * @return The return result with the author name
+ */
     @Override
     public List<Book> searchByAuthor(String author) {
         try {
@@ -174,7 +201,11 @@ public class BookModel implements IBookModel {
         }
         return new ArrayList<Book>();
     }
-
+/**
+ * 
+ * @param resultSet
+ * @return The books from the extracted result set.
+ */
     private List<Book> resultToBookList(ResultSet resultSet) {
         try {
             List<Book> results = new ArrayList<Book>();
@@ -194,7 +225,12 @@ public class BookModel implements IBookModel {
         return new ArrayList<Book>();
 
     }
-
+/**
+ * 
+ * @param title
+ * @param author
+ * @return The result having both author and title
+ */
     private Book queryByTitleAndAuthor(String title, String author) {
 
         try {
@@ -221,6 +257,10 @@ public class BookModel implements IBookModel {
         return new ArrayList<Book>();
     }
 
+    /**
+     *
+     * @return Available books that are not issued from the DB
+     */
     @Override
     public List<Book> getAvailableBooks() {
         try (ResultSet resultSet = allAvailableBooksStatement.executeQuery()) {
@@ -231,6 +271,10 @@ public class BookModel implements IBookModel {
         return new ArrayList<Book>();
     }
 
+    /**
+     *
+     * @return Fetch all books from the DB
+     */
     @Override
     public List<Book> getAllBooks() {
         try (ResultSet resultSet = allBooksStatement.executeQuery()) {
@@ -241,6 +285,11 @@ public class BookModel implements IBookModel {
         return new ArrayList<Book>();
     }
 
+    /**
+     *
+     * @param book
+     * @return Return the book with the people borrowed count and update in db
+     */
     @Override
     public Book updateBorrowedCount(Book book) {
         try {
@@ -256,6 +305,11 @@ public class BookModel implements IBookModel {
         return null;
     }
 
+    /**
+     *
+     * @param book
+     * @return Will return the book with updated count of the copies in database
+     */
     @Override
     public Book updateCopiesCount(Book book) {
         try {
@@ -271,6 +325,12 @@ public class BookModel implements IBookModel {
         return null;
     }
 
+    /**
+     *
+     * @param BorrowerId
+     * @return Fetch books from db that are borrowed by a particular borrower
+     * that has a unique borrower id
+     */
     @Override
     public List<Book> searchIssuedBooksByBorrower(Long BorrowerId) {
         try {

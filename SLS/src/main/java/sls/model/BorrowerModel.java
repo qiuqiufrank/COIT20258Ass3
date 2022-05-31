@@ -15,7 +15,9 @@ import java.util.List;
 
 /**
  *
+ * Manipulate borrower in the Database
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class BorrowerModel implements IBorrowerModel {
 
@@ -43,7 +45,14 @@ public class BorrowerModel implements IBorrowerModel {
             e.printStackTrace();
         }
     }
-
+/**
+ * 
+ * 
+ * @param name
+ * @param phone
+ * @param email
+ * @return Adds a new borrower to the db
+ */
     @Override
     public Borrower addABorrower(String name, String phone, String email) {
         try {
@@ -69,6 +78,10 @@ public class BorrowerModel implements IBorrowerModel {
         return null;
     }
 
+    /**
+     *
+     * @return All the borrowers fetching from the database
+     */
     @Override
     public List<Borrower> getAllBorrowers() {
         try (ResultSet resultSet = getAllBorrowersStatement.executeQuery()) {
@@ -90,6 +103,10 @@ public class BorrowerModel implements IBorrowerModel {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Borrower> getAllIssuedBorrowers() {
         try (ResultSet resultSet = issuedBorrowerStatement.executeQuery()) {

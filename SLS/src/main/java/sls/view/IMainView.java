@@ -14,15 +14,26 @@ import sls.presenter.UserPresenter;
 /**
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public interface IMainView {
 
     public void bind(BookPresenter bookPresenter, BorrowerPresenter borrowerPresenter, BorrowingRecordPresenter borrowingRecordPresenter, DonorPresenter donorPresenter, UserPresenter userPresenter);
 
+    /**
+     * Appends on a text area used for Main view
+     *
+     * @param m
+     */
     public void appendTextArea(String m);
 
+    /**
+     * Displays an alert used for Main view
+     *
+     * @param m
+     */
     public void promptMessage(String m);
-    
+
     //If the user is not the main librarian, the user tab will be disabed
     public void disableUserTab(boolean disable);
 }

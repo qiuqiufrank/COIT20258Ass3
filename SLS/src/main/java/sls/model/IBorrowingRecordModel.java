@@ -8,8 +8,9 @@ package sls.model;
 import java.util.Date;
 
 /**
- *
+ *To be implemented by Borrowing record model
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public interface IBorrowingRecordModel {
 

@@ -15,12 +15,16 @@ import java.util.Date;
 /**
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class DonationRecordModel implements IDonationRecordModel {
 
     private PreparedStatement donateBooksStatement;
     private Connection connection;
-
+/**
+ * Insertion of donation record
+ * @param connection 
+ */
     public DonationRecordModel(Connection connection) {
         this.connection = connection;
         try {
@@ -33,7 +37,14 @@ public class DonationRecordModel implements IDonationRecordModel {
             e.printStackTrace();
         }
     }
-
+/**
+ * 
+ * @param donorId
+ * @param bookId
+ * @param quantity
+ * @param donationDate
+ * @return Adds a new donation record and returns it on the object 
+ */
     @Override
     public DonationRecord donateBooks(long donorId, String bookId, int quantity, Date donationDate) {
         try {

@@ -15,6 +15,7 @@ import sls.view.IMainView;
 /**
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class UserPresenter {
 
@@ -27,7 +28,15 @@ public class UserPresenter {
         this.userModel = userModel;
         this.mainView = mainView;
     }
-
+/**
+ * 
+ * @param userName
+ * @param password
+ * @param fullName
+ * @param email
+ * @param phoneNumber 
+ * Add a new user with all the params as the details
+ */
     public void addAUser(String userName, String password, String fullName, String email, String phoneNumber) {
         User user = new User(userName, password, fullName, email, phoneNumber, false);
         User nUser = userModel.addUser(user);
@@ -39,6 +48,9 @@ public class UserPresenter {
         }
     }
 
+    /**
+     * Search the users
+     */
     public void searchAllUsers() {
 
         List<User> users = userModel.getAllUsers();
@@ -54,6 +66,11 @@ public class UserPresenter {
         mainView.appendTextArea(s);
     }
 
+    
+    /**
+     * 
+     * @param userName Deletes the user with this username
+     */
     public void deleteAUser(String userName) {
         if (userModel.DeleteAUser(userName) > 0) {
             mainView.appendTextArea("Deleting user:" + userName + " successfully");

@@ -16,8 +16,9 @@ import sls.view.IMainView;
 import sls.view.MainView;
 
 /**
- *
+ * This class handles all the Login Presenter
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class LoginPresenter {
 
@@ -34,7 +35,11 @@ public class LoginPresenter {
         this.loginView = loginView;
         this.mainView = mainView;
     }
-
+/**
+ * 
+ * @param name Corresponding login name
+ * @param password Corresponding login password
+ */
     public void login(String name, String password) {
 
         User user = userModel.searchValidUser(name, password);
@@ -51,7 +56,9 @@ public class LoginPresenter {
         stage.show();
 
     }
-
+    /**
+     * Finished/Close the application
+     */
     public void exit() {
         System.exit(0);
     }

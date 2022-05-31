@@ -8,8 +8,9 @@ package sls.model;
 import java.util.Date;
 
 /**
- *
+ * Donation record getter setter
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class DonationRecord {
    private  Long id;

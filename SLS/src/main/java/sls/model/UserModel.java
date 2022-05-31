@@ -16,6 +16,7 @@ import java.util.List;
 /**
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class UserModel implements IUserModel {
 
@@ -26,7 +27,10 @@ public class UserModel implements IUserModel {
     private PreparedStatement addUserStatement;
     private PreparedStatement allUsersStatement;
     private PreparedStatement deleteUserStatement;
-
+/**
+ * Retrieve all forms if results in the form of user objects
+ * @param connection 
+ */
     public UserModel(Connection connection) {
         this.connection = connection;
         try {
@@ -53,7 +57,11 @@ public class UserModel implements IUserModel {
             e.printStackTrace();
         }
     }
-
+/**
+ * 
+ * @param user
+ * @return Deletes the user in the db and returns 1 or -1 if failed.
+ */
     public int deleteUser(User user) {
 
         try {
@@ -67,7 +75,11 @@ public class UserModel implements IUserModel {
         return -1;
 
     }
-
+/**
+ * 
+ * @param user
+ * @return Adds the new user to the db and returns it
+ */
     @Override
     public User addUser(User user) {
 
@@ -109,6 +121,13 @@ public class UserModel implements IUserModel {
 //        }
 //        return null;
 //    }
+    
+    /**
+     * 
+     * @param userName
+     * @param password
+     * @return A user that has a username and password as the passed parameters
+     */
     @Override
     public User searchValidUser(String userName, String password) {
         try {
@@ -133,7 +152,10 @@ public class UserModel implements IUserModel {
         }
         return null;
     }
-
+/**
+ * 
+ * @return List of all the users present in the system
+ */
     @Override
     public List<User> getAllUsers() {
         try {
@@ -159,7 +181,12 @@ public class UserModel implements IUserModel {
         }
         return null;
     }
-
+/**
+ * 
+ * @param userName
+ * @return Will delete the user from the db that has the username has the 
+ * string parameter
+ */
     public int DeleteAUser(String userName) {
         try {
             //Set Parameters for the PreparedStatement

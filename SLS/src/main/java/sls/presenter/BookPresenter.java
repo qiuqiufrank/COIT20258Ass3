@@ -17,6 +17,7 @@ import sls.view.IMainView;
 /**
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class BookPresenter {
 
@@ -38,7 +39,11 @@ public class BookPresenter {
             mainView.appendTextArea(book.toString());
         }
     }
-
+/**
+ * 
+ * @param books
+ * @return The result in the form of string
+ */
     private String booksToString(List<Book> books) {
         String s = "";
         String headerString = String.format("Id\tTitle\tAuthor\tCopies\tBorrowed Count");
@@ -49,7 +54,10 @@ public class BookPresenter {
         }
         return s;
     }
-
+/**
+ * 
+ * @param title  Search a book provided title
+ */
     public void searchByTitle(String title) {
         List<Book> books = bookModel.searchByTitle(title);
         if (books.size() > 0) {
@@ -59,7 +67,10 @@ public class BookPresenter {
             mainView.appendTextArea("\nSearching title " + title + " is not found");
         }
     }
-
+/**
+ * 
+ * @param author Search a book provided author name
+ */
     public void searchByAuthor(String author) {
         List<Book> books = bookModel.searchByAuthor(author);
         if (books.size() > 0) {
@@ -70,6 +81,9 @@ public class BookPresenter {
         }
     }
 
+    /**
+     * Search in all issued books
+     */
     public void searchIssuedBooks() {
         List<Book> books = bookModel.getAllIssuedBooks();
         if (books.size() > 0) {
@@ -80,6 +94,9 @@ public class BookPresenter {
         }
     }
 
+    /**
+     * Books that have passed the return dates
+     */
     public void searchOverdueBooks() {
         List<Book> books = bookModel.getAllOverdueBooks();
         if (books.size() > 0) {
@@ -90,6 +107,11 @@ public class BookPresenter {
         }
     }
 
+    /**
+     * Searching a book that is issued to this borrower
+     *
+     * @param borrower
+     */
     public void searchIssuedBooksByBorrower(Borrower borrower) {
         List<Book> books = bookModel.searchIssuedBooksByBorrower(borrower.getId());
         if (books.size() > 0) {
@@ -100,6 +122,10 @@ public class BookPresenter {
         }
     }
 
+    /**
+     *
+     * @param donor Search a book by this donor
+     */
     public void searchBooksByDonor(Donor donor) {
         List<Book> books = bookModel.searchBooksByDonor(donor.getId());
         if (books.size() > 0) {
@@ -110,6 +136,10 @@ public class BookPresenter {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public ObservableList<Book> getAvailableBooks() {
         List<Book> books = bookModel.getAvailableBooks();
         ObservableList<Book> obs = FXCollections.observableArrayList();
@@ -119,6 +149,10 @@ public class BookPresenter {
         return obs;
     }
 
+    /**
+     *
+     * @return Return all the books
+     */
     public ObservableList<Book> getAllBooks() {
         List<Book> books = bookModel.getAllBooks();
         ObservableList<Book> obs = FXCollections.observableArrayList();
@@ -128,6 +162,10 @@ public class BookPresenter {
         return obs;
     }
 
+    /**
+     *
+     * @return Get Issued Books
+     */
     public ObservableList<Book> getIssueddBooks() {
         List<Book> books = bookModel.getAllIssuedBooks();
         ObservableList<Book> obs = FXCollections.observableArrayList();
@@ -137,6 +175,11 @@ public class BookPresenter {
         return obs;
     }
 
+    /**
+     *
+     * @param borrower
+     * @return Get issued books to a borrower
+     */
     public ObservableList<Book> getIssuedBooksByBorrower(Borrower borrower) {
         List<Book> books = bookModel.searchIssuedBooksByBorrower(borrower.getId());
         ObservableList<Book> obs = FXCollections.observableArrayList();

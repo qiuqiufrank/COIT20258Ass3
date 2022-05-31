@@ -15,10 +15,16 @@ import sls.presenter.UserPresenter;
 /**
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public interface ILoginView {
 
     public void bind(LoginPresenter loginPresenter);
 
+    /**
+     * Displays an alert used for Main view
+     *
+     * @param m
+     */
     public void promptMessage(String m);
 }

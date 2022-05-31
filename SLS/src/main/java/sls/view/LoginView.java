@@ -21,6 +21,7 @@ import sls.presenter.UserPresenter;
  * FXML Controller class
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class LoginView implements Initializable, ILoginView {
 
@@ -54,7 +55,10 @@ public class LoginView implements Initializable, ILoginView {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-
+    /**
+     * Prompt a suitable message to the user whenever wherever it is required.
+     * @param m 
+     */
     @Override
     public void promptMessage(String m) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -63,6 +67,10 @@ public class LoginView implements Initializable, ILoginView {
         alert.show();
     }
 
+    /**
+     * To bind with the login presenter that works with the login procedure.
+     * @param loginPresenter 
+     */
     @Override
     public void bind(LoginPresenter loginPresenter) {
         this.lp = loginPresenter;

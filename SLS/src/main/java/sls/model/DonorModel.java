@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * DB manipulator for Donor
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class DonorModel implements IDonorModel {
     //JDBC connection
@@ -25,6 +27,11 @@ public class DonorModel implements IDonorModel {
     private PreparedStatement addDonorStatement;
     private PreparedStatement allDonorsStatement;
 
+    /**
+     * Insertion of donor
+     *
+     * @param connection
+     */
     public DonorModel(Connection connection) {
         this.connection = connection;
         try {
@@ -46,6 +53,15 @@ public class DonorModel implements IDonorModel {
 
     }
 
+    /**
+     *
+     * @param name
+     * @param fullName
+     * @param email
+     * @param phone
+     * @return Adds the new donor with parameters passed on the method and
+     * returns it as a object
+     */
     @Override
     public Donor addNewDonor(String name, String fullName, String email, String phone) {
         try {
@@ -72,6 +88,10 @@ public class DonorModel implements IDonorModel {
         return null;
     }
 
+    /**
+     *
+     * @return All the donors in the Database
+     */
     @Override
     public List<Donor> getAllDonors() {
         try (ResultSet resultSet = allDonorsStatement.executeQuery()) {

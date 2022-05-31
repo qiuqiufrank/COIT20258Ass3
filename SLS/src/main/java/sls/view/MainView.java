@@ -5,7 +5,6 @@
  */
 package sls.view;
 
-
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -44,6 +43,7 @@ import sls.presenter.UserPresenter;
  * FXML Controller class
  *
  * @author Faqiu Sun
+ * @edited Hirvi
  */
 public class MainView implements Initializable, IMainView {
 
@@ -130,6 +130,11 @@ public class MainView implements Initializable, IMainView {
     @FXML
     private Tab userTab;
 
+    /**
+     * THis methods a borrower to DB
+     *
+     * @param event
+     */
     @FXML
     void addABorrower(ActionEvent event) {
 
@@ -145,16 +150,29 @@ public class MainView implements Initializable, IMainView {
         borrowerPresenter.addABorrower(addABorrowerNameTF.getText(), addABorrowerPhoneTF.getText(), addABorrowerEmailTF.getText());
     }
 
+    /**
+     * This method calls the issued books to search
+     *
+     * @param event
+     */
     @FXML
     void searchIssuedBooks(ActionEvent event) {
         bookPresenter.searchIssuedBooks();
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void getOverdueReturns(ActionEvent event) {
 
     }
 
+    /**
+     *
+     * @param event To search the books by title
+     */
     @FXML
     void searchBooksByTitle(ActionEvent event) {
         if (isEmpty(searchBooksByTitleTF)) {
@@ -163,6 +181,10 @@ public class MainView implements Initializable, IMainView {
         bookPresenter.searchByTitle(searchBooksByTitleTF.getText());
     }
 
+    /**
+     *
+     * @param event To search the books by Author
+     */
     @FXML
     void searchBooksByAuthor(ActionEvent event) {
 
@@ -172,6 +194,10 @@ public class MainView implements Initializable, IMainView {
         bookPresenter.searchByAuthor(searchBooksByAuthorTF.getText());
     }
 
+    /**
+     *
+     * @param event This method adds a book with a given title and author
+     */
     @FXML
     void addABook(ActionEvent event) {
         String author = addABookAuthorTF.getText();
@@ -186,6 +212,11 @@ public class MainView implements Initializable, IMainView {
         bookPresenter.addNewBook(title, author);
     }
 
+    /**
+     * Fetch list of available books and send it to the UI
+     *
+     * @param event
+     */
     @FXML
     void onShowAvailableBooks(Event event) {
 
@@ -196,12 +227,22 @@ public class MainView implements Initializable, IMainView {
 //                -> System.out.println("Price of the " + newVal.getId()));
     }
 
+    /**
+     * Get A list of available books to display
+     *
+     * @param event
+     */
     @FXML
     void onShowBorrowedBooks(Event event) {
         ObservableList<Book> books = bookPresenter.getAvailableBooks();
         updateBookOptions(books, returnABookBookCB);
     }
 
+    /**
+     *
+     * @param event Retrieves all the books that are issued to this borrower
+     * 
+     */
     @FXML
     void onShowBorrowedBooksByBorrower(Event event) {
         Borrower borrower = returnABookBorrowerCB.getValue();
@@ -216,18 +257,32 @@ public class MainView implements Initializable, IMainView {
 
     }
 
+    /**
+     *
+     * @param e
+     * 
+     * This will retrieve all the books.
+     */
     @FXML
     void onShowDonateBooks(Event e) {
         ObservableList<Book> books = bookPresenter.getAllBooks();
         updateBookOptions(books, donateBooksBookCB);
     }
 
+    /**
+     *
+     * @param e Retrieve and display all the donors who have donated books.
+     */
     @FXML
     void onShowDonateDonors(Event e) {
         ObservableList<Donor> books = donorPresenter.getAllDonors();
         updateDonorOptions(books, donateBooksDonorCB);
     }
 
+    /**
+     *
+     * @param e Retrieved Search results of books that are donated by donors
+     */
     @FXML
     void onShowSearchBooksByDonors(Event e) {
         ObservableList<Donor> books = donorPresenter.getAllDonors();
@@ -258,6 +313,10 @@ public class MainView implements Initializable, IMainView {
         updateBorrowerOptions(borrowers, searchAllBooksByBorrowerBorrowerCB);
     }
 
+    /**
+     * 
+     * @param event It will retrieve all the borrowers that have taken a book
+     */
     @FXML
     void onShowIssuedBorrowers(Event event) {
 
@@ -265,6 +324,10 @@ public class MainView implements Initializable, IMainView {
         updateBorrowerOptions(borrowers, returnABookBorrowerCB);
     }
 
+    /**
+     *
+     * @param e This will issue a book to the borrower.
+     */
     @FXML
     void borrowABook(ActionEvent e) {
 
@@ -302,6 +365,10 @@ public class MainView implements Initializable, IMainView {
         borrowingRecordPresenter.IssueABook(book, borrower, issuedDate, returnDate);
     }
 
+    /**
+     *
+     * @param e This will return a book that was issued to a borrower
+     */
     @FXML
     void returnABook(ActionEvent e) {
 
@@ -318,6 +385,10 @@ public class MainView implements Initializable, IMainView {
         borrowingRecordPresenter.returnABook(book, borrower);
     }
 
+    /**
+     *
+     * @param e This will register/add a new donor.
+     */
     @FXML
     void addADonor(ActionEvent e) {
 
@@ -327,11 +398,20 @@ public class MainView implements Initializable, IMainView {
         donorPresenter.addADonor(addADonorNameTF.getText(), addADonorFullNameTF.getText(), addADonorEmailTF.getText(), addADonorPhoneTF.getText());
     }
 
+    /**
+     *
+     * @param e 
+     */
     @FXML
     void searchOverdueReturns(ActionEvent e) {
         bookPresenter.searchOverdueBooks();
     }
 
+    /**
+     *
+     * @param e As a donor donates a book this function is used to issue that
+     * book.
+     */
     @FXML
     void donateBooks(ActionEvent e) {
         Book book = donateBooksBookCB.getValue();
@@ -369,6 +449,10 @@ public class MainView implements Initializable, IMainView {
 
     }
 
+    /**
+     *
+     * @param e This method will search a book in the books that are already issued
+     */
     @FXML
     void searchIssuedBookByBorrower(ActionEvent e) {
         Borrower borrower = searchAllBooksByBorrowerBorrowerCB.getValue();
@@ -379,6 +463,10 @@ public class MainView implements Initializable, IMainView {
         bookPresenter.searchIssuedBooksByBorrower(borrower);
     }
 
+    /**
+     *
+     * @param e Search in those Books that are donated.
+     */
     @FXML
     void searchBooksByDonator(ActionEvent e) {
         Donor donor = searchBooksByDonorDonorCB.getValue();
@@ -389,6 +477,10 @@ public class MainView implements Initializable, IMainView {
         bookPresenter.searchBooksByDonor(donor);
     }
 
+    /**
+     *
+     * @param e This will add a new user to the Database
+     */
     @FXML
     void addAUser(ActionEvent e) {
         if (isEmpty(manageAUserUserNameTF) || isEmpty(manageAUserPasswordTF) || isEmpty(manageAUserFullNameTF)
@@ -403,11 +495,17 @@ public class MainView implements Initializable, IMainView {
 
     }
 
+    /**
+     * THis will search all the users in the DB
+     */
     @FXML
     void searchAllUsers() {
         userPresenter.searchAllUsers();
     }
 
+    /**
+     * This will remove the user from the db
+     */
     @FXML
     void deleteAUser() {
         if (isEmpty(manageAUserUserNameTF)) {
@@ -416,6 +514,11 @@ public class MainView implements Initializable, IMainView {
         userPresenter.deleteAUser(manageAUserUserNameTF.getText());
     }
 
+    /**
+     * This will update the book options on the drop down/combobox
+     * @param books 
+     * @param cb
+     */
     void updateBookOptions(ObservableList<Book> books, ComboBox<Book> cb) {
         cb.setItems(books);
         cb.setConverter(new StringConverter<Book>() {
@@ -432,6 +535,11 @@ public class MainView implements Initializable, IMainView {
         });
     }
 
+    /**
+     *This will update the Donor options on the drop down/combobox
+     * @param donors
+     * @param cb
+     */
     void updateDonorOptions(ObservableList<Donor> donors, ComboBox<Donor> cb) {
         cb.setItems(donors);
         cb.setConverter(new StringConverter<Donor>() {
@@ -453,6 +561,11 @@ public class MainView implements Initializable, IMainView {
         });
     }
 
+    /**This will update the borrower options on the drop down/combobox
+     *
+     * @param borrowers
+     * @param cb
+     */
     void updateBorrowerOptions(ObservableList<Borrower> borrowers, ComboBox<Borrower> cb) {
         cb.setItems(borrowers);
         cb.setConverter(new StringConverter<Borrower>() {
@@ -474,6 +587,11 @@ public class MainView implements Initializable, IMainView {
         });
     }
 
+    /**
+     *
+     * @param tf
+     * @return True if the text field is empty else return false
+     */
     private boolean isEmpty(TextField tf) {
         String v = tf.getText();
         if (v.isEmpty()) {
@@ -484,6 +602,11 @@ public class MainView implements Initializable, IMainView {
         return false;
     }
 
+    /**
+     *
+     * @param tf
+     * @return Returns boolean if the password is in correct format
+     */
     private boolean validatePassword(TextField tf) {
         String password = tf.getText();
         //If the length is less than 8, return false;
@@ -513,6 +636,11 @@ public class MainView implements Initializable, IMainView {
         return true;
     }
 
+    /**
+     *
+     * @param tf
+     * @return boolean if the phone number is in correct format
+     */
     private boolean validateNumber(TextField tf) {
         String v = tf.getText();
         try {
@@ -533,12 +661,25 @@ public class MainView implements Initializable, IMainView {
 
     }
 
+    /**
+     *
+     * @param disable THe user tab can be disabled using this function and 
+     * reflected on the UI.
+     */
     @Override
     public void disableUserTab(boolean disable) {
 
         userTab.setDisable(true);
     }
 
+    /**
+     *
+     * @param bookPresenter
+     * @param borrowerPresenter
+     * @param borrowingRecordPresenter
+     * @param donorPresenter
+     * @param userPresenter
+     */
     @Override
     public void bind(BookPresenter bookPresenter, BorrowerPresenter borrowerPresenter, BorrowingRecordPresenter borrowingRecordPresenter, DonorPresenter donorPresenter, UserPresenter userPresenter) {
         this.bookPresenter = bookPresenter;
@@ -548,11 +689,19 @@ public class MainView implements Initializable, IMainView {
         this.userPresenter = userPresenter;
     }
 
+    /**
+     *
+     * @param m is the text that is appended to the text area.
+     */
     @Override
     public void appendTextArea(String m) {
         textArea.appendText(m + "\n");
     }
 
+    /**
+     *
+     * @param m is the custom message during the main view.
+     */
     @Override
     public void promptMessage(String m) {
         Alert alert = new Alert(AlertType.INFORMATION);
