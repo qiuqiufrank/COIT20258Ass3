@@ -1,3 +1,8 @@
+-- --------create schema
+create schema ass3db;
+use ass3db;
+
+-- --------drop table
 DROP TABLE `ass3db`.`donationrecord`,`ass3db`.`borrowingrecord`,`ass3db`.`borrower`,   `ass3db`.`donor`, `ass3db`.`user`,`ass3db`.`book`,`ass3db`.`book_seq`;
 
 CREATE TABLE User
@@ -75,10 +80,10 @@ CREATE TABLE BorrowingRecord
     CONSTRAINT FK_BorrowingRecordBook FOREIGN KEY (BookId) REFERENCES Book(Id)
 );
 
--- create users to login in
+-- ------create users to login in
 INSERT INTO User(UserName, Password,FullName ,Email ,PhoneNumber ,isAdmin )
 VALUES ("admin","1234567a","fn1","email1@test.com","123456789",true),
-("librarian","1234567b","fn2","email2@test.com","223456876",false)
+("user1","1234567b","fn2","email2@test.com","223456876",false)
 ;
 
 

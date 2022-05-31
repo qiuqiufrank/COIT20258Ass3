@@ -59,12 +59,12 @@ public class DonorPresenter {
         DonationRecord dr = donationRecordModel.donateBooks(donor.getId(), book.getId(), copies, donationDate);
 
         if (dr == null) {
-            mainView.appendTextArea("\n Failed to donate Book:" + book.getTitle() + " donated by:" + donor.getName());
+            mainView.appendTextArea("\nFailed to donate Book:" + book.getTitle() + " donated by " + donor.getName());
         } else {
             book.setCopies(book.getCopies() + copies);
             Book nbook = bookModel.updateCopiesCount(book);
             if (nbook!=null) {
-                mainView.appendTextArea("\n Succeeded to donate Book:" + nbook.getTitle() + " donated by:" + donor.getName() + ":");
+                mainView.appendTextArea("\nSucceeded to donate Book:" + nbook.getTitle() + " donated by" + donor.getName() + ":");
                 mainView.appendTextArea(dr.toString());
             }
 

@@ -287,6 +287,7 @@ public class MainView implements Initializable, IMainView {
 
         if (returnDate.before(issuedDate) || returnDate.equals(issuedDate)) {
             promptMessage("Return date must be after the issued date");
+            return;
         }
         Book book = borrowABookBookCB.getValue();
         Borrower borrower = borrowABookBorrowerCB.getValue();
