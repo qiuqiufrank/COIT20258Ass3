@@ -9,12 +9,15 @@ import java.util.List;
 
 /**
  * To be implemented by book model
+ *
  * @author Faqiu Sun
  * @edited Hirvi
  */
 public interface IBookModel {
 
     public Book addNewBook(String title, String author);
+
+    public int deleteBook(String bookId);
 
     public List<Book> searchByTitle(String title);
 

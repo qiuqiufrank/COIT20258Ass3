@@ -52,7 +52,10 @@ public class MainView implements Initializable, IMainView {
     BorrowingRecordPresenter borrowingRecordPresenter;
     DonorPresenter donorPresenter;
     UserPresenter userPresenter;
-
+    
+    
+    @FXML 
+    private Button deleteABookButton;
     @FXML
     private TextField addABorrowerEmailTF;
 
@@ -114,7 +117,8 @@ public class MainView implements Initializable, IMainView {
     private ComboBox<Donor> donateBooksDonorCB;
     @FXML
     private ComboBox<Donor> searchBooksByDonorDonorCB;
-
+    @FXML
+    private ComboBox<Book> deleteABookBookCB;
     @FXML
     private ComboBox<Book> returnABookBookCB;
 
@@ -158,6 +162,17 @@ public class MainView implements Initializable, IMainView {
     @FXML
     void searchIssuedBooks(ActionEvent event) {
         bookPresenter.searchIssuedBooks();
+    }
+
+    @FXML
+    void deleteABook(ActionEvent event) {
+
+        Book book = deleteABookBookCB.getValue();
+        if (book == null) {
+            promptMessage("Book must be selected");
+            return;
+        }
+        bookPresenter.deleteABook(book);
     }
 
     /**
@@ -227,6 +242,12 @@ public class MainView implements Initializable, IMainView {
 //                -> System.out.println("Price of the " + newVal.getId()));
     }
 
+    @FXML
+    void onShowDeleteBooks(Event event) {
+        ObservableList<Book> books = bookPresenter.getAllBooks();
+        updateBookOptions(books, deleteABookBookCB);
+    }
+
     /**
      * Get A list of available books to display
      *
@@ -241,7 +262,7 @@ public class MainView implements Initializable, IMainView {
     /**
      *
      * @param event Retrieves all the books that are issued to this borrower
-     * 
+     *
      */
     @FXML
     void onShowBorrowedBooksByBorrower(Event event) {
@@ -260,7 +281,7 @@ public class MainView implements Initializable, IMainView {
     /**
      *
      * @param e
-     * 
+     *
      * This will retrieve all the books.
      */
     @FXML
@@ -314,7 +335,7 @@ public class MainView implements Initializable, IMainView {
     }
 
     /**
-     * 
+     *
      * @param event It will retrieve all the borrowers that have taken a book
      */
     @FXML
@@ -401,7 +422,7 @@ public class MainView implements Initializable, IMainView {
 
     /**
      *
-     * @param e 
+     * @param e
      */
     @FXML
     void searchOverdueReturns(ActionEvent e) {
@@ -452,7 +473,8 @@ public class MainView implements Initializable, IMainView {
 
     /**
      *
-     * @param e This method will search a book in the books that are already issued
+     * @param e This method will search a book in the books that are already
+     * issued
      */
     @FXML
     void searchIssuedBookByBorrower(ActionEvent e) {
@@ -517,7 +539,8 @@ public class MainView implements Initializable, IMainView {
 
     /**
      * This will update the book options on the drop down/combobox
-     * @param books 
+     *
+     * @param books
      * @param cb
      */
     void updateBookOptions(ObservableList<Book> books, ComboBox<Book> cb) {
@@ -537,7 +560,8 @@ public class MainView implements Initializable, IMainView {
     }
 
     /**
-     *This will update the Donor options on the drop down/combobox
+     * This will update the Donor options on the drop down/combobox
+     *
      * @param donors
      * @param cb
      */
@@ -562,7 +586,8 @@ public class MainView implements Initializable, IMainView {
         });
     }
 
-    /**This will update the borrower options on the drop down/combobox
+    /**
+     * This will update the borrower options on the drop down/combobox
      *
      * @param borrowers
      * @param cb
@@ -664,13 +689,15 @@ public class MainView implements Initializable, IMainView {
 
     /**
      *
-     * @param disable THe user tab can be disabled using this function and 
+     * @param disable The admin functions using this function and
      * reflected on the UI.
      */
     @Override
-    public void disableUserTab(boolean disable) {
-
-        userTab.setDisable(true);
+    public void disableAdminFunctions(boolean disable) {
+        userTab.setDisable(disable);
+        deleteABookButton.setDisable(disable);
+        deleteABookBookCB.setDisable(disable);
+        
     }
 
     /**

@@ -20,11 +20,14 @@ import java.util.Date;
 public class DonationRecordModel implements IDonationRecordModel {
 
     private PreparedStatement donateBooksStatement;
+    private PreparedStatement deleteByBookStatement;
     private Connection connection;
-/**
- * Insertion of donation record
- * @param connection 
- */
+
+    /**
+     * Insertion of donation record
+     *
+     * @param connection
+     */
     public DonationRecordModel(Connection connection) {
         this.connection = connection;
         try {
@@ -33,18 +36,36 @@ public class DonationRecordModel implements IDonationRecordModel {
                     "INSERT INTO DonationRecord( DonorId ,BookId,Quantity,DonationDate  ) VALUES"
                     + "(?,?,?,?)", Statement.RETURN_GENERATED_KEYS
             );
+
+            deleteByBookStatement = connection.prepareStatement(
+                    "DELETE FROM DonationRecord where BookId=?;"
+            );
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-/**
- * 
- * @param donorId
- * @param bookId
- * @param quantity
- * @param donationDate
- * @return Adds a new donation record and returns it on the object 
- */
+
+    @Override
+    public int deleteRecordsByBook(String bookId) {
+        try {
+            //Set Parameters for the PreparedStatement
+            deleteByBookStatement.setString(1, bookId);
+            return deleteByBookStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     *
+     * @param donorId
+     * @param bookId
+     * @param quantity
+     * @param donationDate
+     * @return Adds a new donation record and returns it on the object
+     */
     @Override
     public DonationRecord donateBooks(long donorId, String bookId, int quantity, Date donationDate) {
         try {

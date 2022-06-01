@@ -34,6 +34,6 @@ public interface IMainView {
      */
     public void promptMessage(String m);
 
-    //If the user is not the main librarian, the user tab will be disabed
-    public void disableUserTab(boolean disable);
+    //If the user is not the main librarian, the privileged functions will be disabed
+    public void disableAdminFunctions(boolean disable);
 }

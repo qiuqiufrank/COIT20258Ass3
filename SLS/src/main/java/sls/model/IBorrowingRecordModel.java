@@ -8,7 +8,8 @@ package sls.model;
 import java.util.Date;
 
 /**
- *To be implemented by Borrowing record model
+ * To be implemented by Borrowing record model
+ *
  * @author Faqiu Sun
  * @edited Hirvi
  */
@@ -17,4 +18,6 @@ public interface IBorrowingRecordModel {
     public BorrowingRecord issueABook(Book book, Borrower borrower, Date issueDate, Date expectedReturn);
 
     public int returnABook(Book book, Borrower borrower);
+
+    public int deleteRecordsByBook(String bookId);
 }

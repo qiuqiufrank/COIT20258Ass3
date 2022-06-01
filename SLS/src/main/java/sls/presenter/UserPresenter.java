@@ -72,7 +72,7 @@ public class UserPresenter {
      * @param userName Deletes the user with this username
      */
     public void deleteAUser(String userName) {
-        if (userModel.DeleteAUser(userName) > 0) {
+        if (userModel.DeleteAUser(userName) >0) {
             mainView.appendTextArea("Deleting user:" + userName + " successfully");
         } else {
             mainView.appendTextArea("Deleting user:" + userName + " failed");

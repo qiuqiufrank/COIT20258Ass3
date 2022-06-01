@@ -28,11 +28,10 @@ import sls.presenter.DonorPresenter;
 import sls.presenter.UserPresenter;
 
 /**
- * 
+ *
  * @author Faqiu Sun
  * @edited Hirvi
  */
-
 public class MainApp extends Application {
 
     //Mysql url
@@ -40,7 +39,7 @@ public class MainApp extends Application {
     //Mysql username
     private static final String USERNAME = "root";
     //Mysql password
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "mypassword";
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -60,6 +59,7 @@ public class MainApp extends Application {
 
         }
 
+        //create views
         FXMLLoader lloader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
         Parent loginRoot = lloader.load();
         Scene loginScene = new Scene(loginRoot);
@@ -72,6 +72,7 @@ public class MainApp extends Application {
         loginScene.getStylesheets().add("/styles/Styles.css");
         MainView mainView = mloader.getController();
 
+        //create models
         UserModel userModel = new UserModel(connection);
         BookModel bookModel = new BookModel(connection);
         BorrowerModel borrowerModel = new BorrowerModel(connection);
@@ -79,9 +80,10 @@ public class MainApp extends Application {
         DonorModel donorModel = new DonorModel(connection);
         DonationRecordModel donationRecordModel = new DonationRecordModel(connection);
 
+        //create presenters
         LoginPresenter loginPresenter = new LoginPresenter();
         BorrowerPresenter borrowerPresenter = new BorrowerPresenter(borrowerModel, mainView);
-        BookPresenter bookPresenter = new BookPresenter(bookModel, mainView);
+        BookPresenter bookPresenter = new BookPresenter(bookModel, donationRecordModel, borrowingRecordModel, mainView);
         BorrowingRecordPresenter borrowingRecordPresenter = new BorrowingRecordPresenter(borrowingRecordModel, bookModel, mainView);
         DonorPresenter donorPresenter = new DonorPresenter(donorModel, donationRecordModel, bookModel, mainView);
         UserPresenter userPresenter = new UserPresenter(userModel, mainView);
@@ -92,7 +94,7 @@ public class MainApp extends Application {
 
         stage.setTitle("OLMC Spiritual Library System");
         stage.setScene(loginScene);
-        // stage.setScene(mainScene);
+        //stage.setScene(mainScene);
         stage.show();
     }
 

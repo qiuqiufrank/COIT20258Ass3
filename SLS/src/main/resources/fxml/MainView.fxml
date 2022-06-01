@@ -17,7 +17,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="155.0" prefWidth="261.0">
                      <children>
-                        <GridPane layoutX="15.0" layoutY="358.0" prefHeight="102.0" prefWidth="469.0" style="-fx-border-color: black;">
+                        <GridPane layoutX="17.0" layoutY="460.0" prefHeight="72.0" prefWidth="469.0" style="-fx-border-color: black;">
                            <children>
                               <Button fx:id="issuedBooks" mnemonicParsing="false" onAction="#searchIssuedBooks" text="Issued Books" />
                               <Button fx:id="overdueReturnsBtn" mnemonicParsing="false" onAction="#searchOverdueReturns" text="Overdue Returns" GridPane.columnIndex="1" />
@@ -30,12 +30,12 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Label layoutX="29.0" layoutY="338.0" style="-fx-background-color: white;" text="Query All">
+                        <Label layoutX="31.0" layoutY="440.0" style="-fx-background-color: white;" text="Query All">
                            <opaqueInsets>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
                         </Label>
-                        <GridPane layoutX="14.0" layoutY="184.0" prefHeight="136.0" prefWidth="470.0" style="-fx-border-color: black;">
+                        <GridPane layoutX="16.0" layoutY="291.0" prefHeight="136.0" prefWidth="470.0" style="-fx-border-color: black;">
                            <children>
                               <Button fx:id="searchBooksByTitleBtn" mnemonicParsing="false" onAction="#searchBooksByTitle" text="Search" GridPane.columnIndex="2" />
                               <TextField fx:id="searchBooksByTitleTF" GridPane.columnIndex="1">
@@ -62,7 +62,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Label layoutX="37.0" layoutY="164.0" style="-fx-background-color: white;" text="Search books">
+                        <Label layoutX="39.0" layoutY="271.0" style="-fx-background-color: white;" text="Search books">
                            <opaqueInsets>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
@@ -80,7 +80,7 @@
                                  </padding>
                               </TextField>
                               <Button fx:id="addBookBtn" mnemonicParsing="false" onAction="#addABook" text="Add" GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" text="Delete" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="deleteABookButton" mnemonicParsing="false" onAction="#deleteABook" text="Delete" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <Label text="Title" />
                               <Label text="Author" GridPane.rowIndex="1" />
                            </children>
@@ -94,7 +94,25 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Label layoutX="29.0" layoutY="15.0" style="-fx-background-color: white;" text="Add /Delete a book">
+                        <Label layoutX="29.0" layoutY="15.0" style="-fx-background-color: white;" text="Add a book">
+                           <opaqueInsets>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </opaqueInsets>
+                        </Label>
+                        <GridPane layoutX="16.0" layoutY="172.0" prefHeight="82.0" prefWidth="470.0" style="-fx-border-color: black;">
+                           <children>
+                              <Button fx:id="deleteABookButton" mnemonicParsing="false" onAction="#deleteABook" text="Delete" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="deleteABookBookCB" onShown="#onShowDeleteBooks" prefWidth="150.0" />
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="30.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <Label layoutX="29.0" layoutY="159.0" style="-fx-background-color: white;" text="Delete a book">
                            <opaqueInsets>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>

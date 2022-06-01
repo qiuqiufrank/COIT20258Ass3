@@ -25,10 +25,13 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
     private Connection connection;
     private PreparedStatement issueABookStatement;
     private PreparedStatement returnABookStatement;
-/**
- * Return the book and issuing a book 
- * @param connection 
- */
+    private PreparedStatement deleteByBookStatement;
+
+    /**
+     * Return the book and issuing a book
+     *
+     * @param connection
+     */
     public BorrowingRecordModel(Connection connection) {
         this.connection = connection;
         try {
@@ -39,6 +42,9 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
             );
             returnABookStatement = connection.prepareStatement(
                     "UPDATE BorrowingRecord SET Returned=? WHERE BorrowerId=? and BookId=?"
+            );
+            deleteByBookStatement = connection.prepareStatement(
+                    "DELETE FROM BorrowingRecord where BookId=?;"
             );
 
         } catch (SQLException e) {
@@ -52,7 +58,8 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
      * @param borrower
      * @param issuedDate
      * @param expectedReturn
-     * @return This will issue a book present in the db and make corresponding changes to the db 
+     * @return This will issue a book present in the db and make corresponding
+     * changes to the db
      */
     @Override
     public BorrowingRecord issueABook(Book book, Borrower borrower, Date issuedDate, Date expectedReturn) {
@@ -78,6 +85,19 @@ public class BorrowingRecordModel implements IBorrowingRecordModel {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public int deleteRecordsByBook(String bookId) {
+        try {
+            //Set Parameters for the PreparedStatement
+            deleteByBookStatement.setString(1, bookId);
+            return deleteByBookStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     /**

@@ -49,7 +49,7 @@ public class LoginPresenter {
         }
         //disabe user management tab
         if (!user.isIsAdmin()) {
-            mainView.disableUserTab(true);
+            mainView.disableAdminFunctions(true);
         }
 
         stage.setScene(mainScene);

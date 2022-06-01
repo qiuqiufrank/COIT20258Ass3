@@ -25,6 +25,8 @@ public class BookModel implements IBookModel {
     private Connection connection;
 
     private PreparedStatement addBookStatement;
+    private PreparedStatement deleteBookStatement;
+
     private PreparedStatement allIssuedBookStatement;
     private PreparedStatement allOverdueReturnStatement;
     private PreparedStatement allAvailableBooksStatement;
@@ -46,13 +48,14 @@ public class BookModel implements IBookModel {
     public BookModel(Connection connection) {
         this.connection = connection;
         try {
-            //Connecte to Mysql
-            //    connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
             //Define PreparedStatments
             addBookStatement = connection.prepareStatement(
                     "INSERT INTO Book(Title ,Author ,Copies ,BorrowedCount ) VALUES"
                     + "(?,?,?,?)"
+            );
+            deleteBookStatement = connection.prepareStatement(
+                    "DELETE FROM Book where Id=?;"
             );
 
             queryByTitleAndAuthorStatement = connection.prepareStatement(
@@ -119,11 +122,20 @@ public class BookModel implements IBookModel {
         }
         return null;
     }
-/**
- * 
- * @param resultSet
- * @return The list of books from executed query that has given result set
- */
+
+    @Override
+    public int deleteBook(String bookId) {
+        try {
+            //Set Parameters for the PreparedStatement
+            deleteBookStatement.setString(1, bookId);
+            return deleteBookStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     private List<Book> parseBooks(ResultSet resultSet) {
         try {
             List<Book> results = new ArrayList<Book>();
@@ -143,11 +155,12 @@ public class BookModel implements IBookModel {
         }
         return new ArrayList<Book>();
     }
-/**
- * 
- * @param title To be searched with
- * @return All the books with the given title
- */
+
+    /**
+     *
+     * @param title To be searched with
+     * @return All the books with the given title
+     */
     @Override
     public List<Book> searchByTitle(String title) {
         try {
@@ -159,10 +172,11 @@ public class BookModel implements IBookModel {
         }
         return new ArrayList<Book>();
     }
-/**
- * 
- * @return All the books that or overdue from the date of return 
- */
+
+    /**
+     *
+     * @return All the books that or overdue from the date of return
+     */
     @Override
     public List<Book> getAllOverdueBooks() {
         try {
@@ -173,11 +187,12 @@ public class BookModel implements IBookModel {
         }
         return new ArrayList<Book>();
     }
-/**
- * 
- * @param author To be searched with author
- * @return The return result with the author name
- */
+
+    /**
+     *
+     * @param author To be searched with author
+     * @return The return result with the author name
+     */
     @Override
     public List<Book> searchByAuthor(String author) {
         try {
@@ -201,11 +216,12 @@ public class BookModel implements IBookModel {
         }
         return new ArrayList<Book>();
     }
-/**
- * 
- * @param resultSet
- * @return The books from the extracted result set.
- */
+
+    /**
+     *
+     * @param resultSet
+     * @return The books from the extracted result set.
+     */
     private List<Book> resultToBookList(ResultSet resultSet) {
         try {
             List<Book> results = new ArrayList<Book>();
@@ -225,12 +241,13 @@ public class BookModel implements IBookModel {
         return new ArrayList<Book>();
 
     }
-/**
- * 
- * @param title
- * @param author
- * @return The result having both author and title
- */
+
+    /**
+     *
+     * @param title
+     * @param author
+     * @return The result having both author and title
+     */
     private Book queryByTitleAndAuthor(String title, String author) {
 
         try {

@@ -12,6 +12,8 @@ import sls.model.Book;
 import sls.model.Borrower;
 import sls.model.Donor;
 import sls.model.IBookModel;
+import sls.model.IBorrowingRecordModel;
+import sls.model.IDonationRecordModel;
 import sls.view.IMainView;
 
 /**
@@ -22,13 +24,24 @@ import sls.view.IMainView;
 public class BookPresenter {
 
     private IBookModel bookModel;
+    private IDonationRecordModel donationRecordModel;
+    private IBorrowingRecordModel borrowingRecordModel;
     private IMainView mainView;
 
-    public BookPresenter(IBookModel bookModel, IMainView mainView) {
+    public BookPresenter(IBookModel bookModel, IDonationRecordModel donationRecordModel, IBorrowingRecordModel borrowingRecordModel, IMainView mainView) {
         this.bookModel = bookModel;
+        this.donationRecordModel = donationRecordModel;
+        this.borrowingRecordModel = borrowingRecordModel;
         this.mainView = mainView;
     }
 
+
+
+    /**
+     *
+     * @param title
+     * @param author
+     */
     public void addNewBook(String title, String author) {
 
         Book book = bookModel.addNewBook(title, author);
@@ -39,11 +52,22 @@ public class BookPresenter {
             mainView.appendTextArea(book.toString());
         }
     }
-/**
- * 
- * @param books
- * @return The result in the form of string
- */
+
+    public void deleteABook(Book book) {
+        String bookId = book.getId();
+        if (donationRecordModel.deleteRecordsByBook(bookId)>=0 && borrowingRecordModel.deleteRecordsByBook(bookId)>=0&&bookModel.deleteBook(bookId) >= 0 ) {
+            mainView.appendTextArea("Deleting book:" + bookId + " successfully");
+        } else {
+            mainView.appendTextArea("Deleting book:" + bookId + " failed");
+        }
+
+    }
+
+    /**
+     *
+     * @param books
+     * @return The result in the form of string
+     */
     private String booksToString(List<Book> books) {
         String s = "";
         String headerString = String.format("Id\tTitle\tAuthor\tCopies\tBorrowed Count");
@@ -54,10 +78,11 @@ public class BookPresenter {
         }
         return s;
     }
-/**
- * 
- * @param title  Search a book provided title
- */
+
+    /**
+     *
+     * @param title Search a book provided title
+     */
     public void searchByTitle(String title) {
         List<Book> books = bookModel.searchByTitle(title);
         if (books.size() > 0) {
@@ -67,10 +92,11 @@ public class BookPresenter {
             mainView.appendTextArea("\nSearching title " + title + " is not found");
         }
     }
-/**
- * 
- * @param author Search a book provided author name
- */
+
+    /**
+     *
+     * @param author Search a book provided author name
+     */
     public void searchByAuthor(String author) {
         List<Book> books = bookModel.searchByAuthor(author);
         if (books.size() > 0) {

@@ -15,4 +15,5 @@ import java.util.Date;
 public interface IDonationRecordModel {
 
      public DonationRecord donateBooks(long donorId, String bookId, int quantity, Date donationDate);
+     public int deleteRecordsByBook(String bookId);
 }
