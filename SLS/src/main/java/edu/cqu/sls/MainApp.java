@@ -43,7 +43,6 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-//        System.out.println(UserType.Borrower);
 
         Connection connection;
         try {
@@ -53,7 +52,7 @@ public class MainApp extends Application {
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Database Error");
-            alert.setHeaderText("Can not connected to database, software will exit");
+            alert.setHeaderText("Cannot connect to the database. The software will exit.");
             alert.show();
             return;
 

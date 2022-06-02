@@ -3,7 +3,7 @@ create schema ass3db;
 use ass3db;
 
 -- --------drop table
-DROP TABLE `ass3db`.`donationrecord`,`ass3db`.`borrowingrecord`,`ass3db`.`borrower`,   `ass3db`.`donor`, `ass3db`.`user`,`ass3db`.`book`,`ass3db`.`book_seq`;
+-- DROP TABLE `ass3db`.`donationrecord`,`ass3db`.`borrowingrecord`,`ass3db`.`borrower`,   `ass3db`.`donor`, `ass3db`.`user`,`ass3db`.`book`,`ass3db`.`book_seq`;
 
 CREATE TABLE User
 (

@@ -1,3 +1,5 @@
+-- ---- only for testing
+
 
 -- SELECT * from Borrower where Id in (SELECT DISTINCT BorrowerId FROM BorrowingRecord WHERE Returned=false);
 -- INSERT INTO DonationRecord( DonorId ,BookId,Quantity,DonationDate  ) VALUES

@@ -73,9 +73,9 @@ public class UserPresenter {
      */
     public void deleteAUser(String userName) {
         if (userModel.DeleteAUser(userName) >0) {
-            mainView.appendTextArea("Deleting user:" + userName + " successfully");
+            mainView.appendTextArea("\nDeleting user:" + userName + " successfully");
         } else {
-            mainView.appendTextArea("Deleting user:" + userName + " failed");
+            mainView.appendTextArea("\nDeleting user:" + userName + " failed");
         }
     }
 
