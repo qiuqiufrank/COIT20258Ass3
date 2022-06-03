@@ -76,12 +76,12 @@ public class BorrowingRecordPresenter {
             book.setBorrowedCount(book.getBorrowedCount() - 1);
             Book nBook = bookModel.updateBorrowedCount(book);
             if (nBook != null) {
-                mainView.appendTextArea("\nReturning a book="+book.getTitle()+" by "+borrower.getName()+" successfully");
+                mainView.appendTextArea("\nReturning a book:"+book.getTitle()+" by "+borrower.getName()+" successfully");
                 return;
             }
 
         }
-        mainView.appendTextArea("\nReturning a book " +book.getTitle()+" by "+borrower.getName()+" failed");
+        mainView.appendTextArea("\nReturning a book:" +book.getTitle()+" by "+borrower.getName()+" failed");
 
     }
 

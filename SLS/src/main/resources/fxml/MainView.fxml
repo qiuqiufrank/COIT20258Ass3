@@ -342,7 +342,7 @@
                               <Label text="Full Name" GridPane.columnIndex="2" />
                               <TextField fx:id="manageAUserFullNameTF" GridPane.columnIndex="3" />
                               <TextField fx:id="manageAUserUserNameTF" GridPane.columnIndex="1" />
-                              <Label contentDisplay="RIGHT" prefHeight="27.0" prefWidth="91.0" text="Username" />
+                              <Label contentDisplay="RIGHT" text="Username" />
                               <Label text="Email" GridPane.rowIndex="1" />
                               <Label text="Phone" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <TextField fx:id="manageAUserEmailTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />

@@ -92,8 +92,8 @@ public class MainApp extends Application {
         loginPresenter.bind(stage, userModel, mainScene, loginView, mainView);
 
         stage.setTitle("OLMC Spiritual Library System");
-      //  stage.setScene(loginScene);
-        stage.setScene(mainScene);
+        stage.setScene(loginScene);
+        // stage.setScene(mainScene);
         stage.show();
     }
 

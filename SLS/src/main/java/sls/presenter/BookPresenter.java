@@ -56,9 +56,9 @@ public class BookPresenter {
     public void deleteABook(Book book) {
         String bookId = book.getId();
         if (donationRecordModel.deleteRecordsByBook(bookId)>=0 && borrowingRecordModel.deleteRecordsByBook(bookId)>=0&&bookModel.deleteBook(bookId) >= 0 ) {
-            mainView.appendTextArea("Deleting book:" + bookId + " successfully");
+            mainView.appendTextArea("Deleting book:" + book.getTitle() + " successfully");
         } else {
-            mainView.appendTextArea("Deleting book:" + bookId + " failed");
+            mainView.appendTextArea("Deleting book:" + book.getTitle() + " failed");
         }
 
     }
