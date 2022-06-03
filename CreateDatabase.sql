@@ -11,7 +11,7 @@ CREATE TABLE User
 	Password VARCHAR (8) NOT NULL,
 	FullName VARCHAR (40) NOT NULL,
 	Email VARCHAR (20) NOT NULL,
-	PhoneNumber VARCHAR (9) NOT NULL,
+	PhoneNumber VARCHAR (12) NOT NULL,
 	isAdmin Boolean NOT NULL
 );
 CREATE TABLE Donor

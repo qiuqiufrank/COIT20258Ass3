@@ -52,9 +52,8 @@ public class MainView implements Initializable, IMainView {
     BorrowingRecordPresenter borrowingRecordPresenter;
     DonorPresenter donorPresenter;
     UserPresenter userPresenter;
-    
-    
-    @FXML 
+
+    @FXML
     private Button deleteABookButton;
     @FXML
     private TextField addABorrowerEmailTF;
@@ -548,13 +547,20 @@ public class MainView implements Initializable, IMainView {
         cb.setConverter(new StringConverter<Book>() {
             @Override
             public String toString(Book object) {
-                return object.getId();
+                return object.getTitle() + ":" + object.getAuthor();
             }
 
             @Override
             public Book fromString(String string) {
+                String vs[] = string.split(":");
+                if (vs.length != 2) {
+                    return null;
+                }
+                String title=vs[0];
+                String author=vs[1];
+
                 return books.stream().filter(ap
-                        -> ap.getId().equals(string)).findFirst().orElse(null);
+                        -> ap.getAuthor().equals(author)&& ap.getTitle().equals(title)).findFirst().orElse(null);
             }
         });
     }
@@ -570,7 +576,7 @@ public class MainView implements Initializable, IMainView {
         cb.setConverter(new StringConverter<Donor>() {
             @Override
             public String toString(Donor object) {
-                return object.getName() + ":" + object.getId();
+                return object.getFullName() + ":" + object.getName();
             }
 
             @Override
@@ -579,9 +585,10 @@ public class MainView implements Initializable, IMainView {
                 if (vs.length != 2) {
                     return null;
                 }
-                Long id = Long.parseLong(vs[1]);
+                String fullName =vs[0];
+                String userName=vs[1];
                 return donors.stream().filter(ap
-                        -> ap.getId() == (id)).findFirst().orElse(null);
+                        -> ap.getFullName()== fullName&& ap.getName()==userName ).findFirst().orElse(null);
             }
         });
     }
@@ -597,7 +604,7 @@ public class MainView implements Initializable, IMainView {
         cb.setConverter(new StringConverter<Borrower>() {
             @Override
             public String toString(Borrower object) {
-                return object.getName() + ":" + object.getId();
+                return object.getName() + ":" + object.getPhoneNumber();
             }
 
             @Override
@@ -606,9 +613,11 @@ public class MainView implements Initializable, IMainView {
                 if (vs.length != 2) {
                     return null;
                 }
-                Long id = Long.parseLong(vs[1]);
+                String name=vs[0];
+                String phoneNumber=vs[1];
+               // Long id = Long.parseLong(vs[1]);
                 return borrowers.stream().filter(ap
-                        -> ap.getId() == (id)).findFirst().orElse(null);
+                        -> ap.getName().equals(name) && ap.getPhoneNumber().equals(phoneNumber)).findFirst().orElse(null);
             }
         });
     }
@@ -689,15 +698,15 @@ public class MainView implements Initializable, IMainView {
 
     /**
      *
-     * @param disable The admin functions using this function and
-     * reflected on the UI.
+     * @param disable The admin functions using this function and reflected on
+     * the UI.
      */
     @Override
     public void disableAdminFunctions(boolean disable) {
         userTab.setDisable(disable);
         deleteABookButton.setDisable(disable);
         deleteABookBookCB.setDisable(disable);
-        
+
     }
 
     /**

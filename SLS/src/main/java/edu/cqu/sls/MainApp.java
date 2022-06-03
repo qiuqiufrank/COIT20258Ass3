@@ -93,7 +93,7 @@ public class MainApp extends Application {
 
         stage.setTitle("OLMC Spiritual Library System");
         stage.setScene(loginScene);
-       // stage.setScene(mainScene);
+      //  stage.setScene(mainScene);
         stage.show();
     }
 

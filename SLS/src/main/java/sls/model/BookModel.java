@@ -62,10 +62,10 @@ public class BookModel implements IBookModel {
                     "SELECT * FROM Book where Title=? and Author=?"
             );
             queryByTitleStatement = connection.prepareStatement(
-                    "SELECT * FROM Book where Title=? "
+                    "SELECT * FROM Book where Title LIKE ? "
             );
             queryByAuthorStatement = connection.prepareStatement(
-                    "SELECT * FROM Book where Author=? "
+                    "SELECT * FROM Book where Author LIKE ? "
             );
             allIssuedBookStatement = connection.prepareStatement(
                     "SELECT * FROM Book where BorrowedCount>0 "
@@ -164,7 +164,7 @@ public class BookModel implements IBookModel {
     @Override
     public List<Book> searchByTitle(String title) {
         try {
-            queryByTitleStatement.setString(1, title);
+            queryByTitleStatement.setString(1, "%"+title+"%");
             ResultSet resultSet = queryByTitleStatement.executeQuery();
             return parseBooks(resultSet);
         } catch (SQLException e) {
@@ -196,7 +196,7 @@ public class BookModel implements IBookModel {
     @Override
     public List<Book> searchByAuthor(String author) {
         try {
-            queryByAuthorStatement.setString(1, author);
+            queryByAuthorStatement.setString(1, "%"+author+"%");
             ResultSet resultSet = queryByAuthorStatement.executeQuery();
             return parseBooks(resultSet);
         } catch (SQLException e) {
