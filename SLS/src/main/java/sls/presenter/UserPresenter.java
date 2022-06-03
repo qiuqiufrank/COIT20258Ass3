@@ -55,10 +55,10 @@ public class UserPresenter {
 
         List<User> users = userModel.getAllUsers();
         String s = "\nTable of all users: \n";
-        String headerString = String.format("User Name\tFull Name\tPassword\tEmail\tPhone\tIs Admin");
+        String headerString = String.format("User Name\t| Full Name\t| Password\t| Email\t| Phone\t| Is Admin");
         s += headerString + "\n";
         for (User u : users) {
-            String line = String.format("%s\t%s\t%s\t%s\t%s\t%s",
+            String line = String.format("%s\t| %s\t| %s\t| %s\t| %s\t| %s",
                     u.getUserName(), u.getFullName(), u.getPassword(), u.getEmail(), u.getPhoneNumber(), u.isIsAdmin() ? "Yes" : "No"
             );
             s += line + "\n";

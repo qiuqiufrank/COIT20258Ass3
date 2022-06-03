@@ -70,10 +70,10 @@ public class BookPresenter {
      */
     private String booksToString(List<Book> books) {
         String s = "";
-        String headerString = String.format("Id\tTitle\tAuthor\tCopies\tBorrowed Count");
+        String headerString = String.format("Id\t| Title\t| Author\t| Copies\t| Borrowed Count");
         s += headerString + "\n";
         for (Book b : books) {
-            String line = String.format("%s\t%s\t%s\t%d\t%d", b.getId(), b.getTitle(), b.getAuthor(), b.getCopies(), b.getBorrowedCount());
+            String line = String.format("%s\t| %s\t| %s\t| %d\t| %d", b.getId(), b.getTitle(), b.getAuthor(), b.getCopies(), b.getBorrowedCount());
             s += line + "\n";
         }
         return s;

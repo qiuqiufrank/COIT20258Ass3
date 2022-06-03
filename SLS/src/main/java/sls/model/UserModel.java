@@ -166,8 +166,8 @@ public class UserModel implements IUserModel {
             while (resultSet.next()) {
                 User user = new User(
                         resultSet.getString("UserName"),
-                        resultSet.getString("FullName"),
                         resultSet.getString("Password"),
+                        resultSet.getString("FullName"),
                         resultSet.getString("Email"),
                         resultSet.getString("PhoneNumber"),
                         resultSet.getBoolean("isAdmin")
