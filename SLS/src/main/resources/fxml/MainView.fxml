@@ -243,7 +243,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <GridPane layoutX="10.0" layoutY="402.0" prefHeight="95.0" prefWidth="463.0" style="-fx-border-color: black;">
+                        <GridPane layoutX="13.0" layoutY="350.0" prefHeight="95.0" prefWidth="463.0" style="-fx-border-color: black;">
                            <children>
                               <Button mnemonicParsing="false" onAction="#searchBooksByDonator" text="search" GridPane.columnIndex="2" />
                               <Label style="-fx-background-color: white;" text="Donor">
@@ -262,12 +262,12 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Label layoutX="26.0" layoutY="388.0" style="-fx-background-color: white;" text="List all books donated by a donor">
+                        <Label layoutX="29.0" layoutY="336.0" style="-fx-background-color: white;" text="List all books donated by a donor">
                            <opaqueInsets>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
                         </Label>
-                        <GridPane layoutX="11.0" layoutY="211.0" prefHeight="145.0" prefWidth="462.0" style="-fx-border-color: black;">
+                        <GridPane layoutX="13.0" layoutY="168.0" prefHeight="145.0" prefWidth="462.0" style="-fx-border-color: black;">
                           <columnConstraints>
                             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="70.0" minWidth="30.0" prefWidth="70.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
@@ -298,22 +298,20 @@
                               <DatePicker fx:id="donateDateDP" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
-                        <Label layoutX="26.0" layoutY="200.0" style="-fx-background-color: white;" text="Donate Books">
+                        <Label layoutX="28.0" layoutY="157.0" style="-fx-background-color: white;" text="Donate Books">
                            <opaqueInsets>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </opaqueInsets>
                         </Label>
-                        <GridPane layoutX="15.0" layoutY="27.0" prefHeight="156.0" prefWidth="458.0" style="-fx-border-color: black;">
+                        <GridPane layoutX="15.0" layoutY="27.0" prefHeight="115.0" prefWidth="458.0" style="-fx-border-color: black;">
                            <children>
-                              <Label text="Full Name" GridPane.columnIndex="2" />
-                              <TextField fx:id="addADonorFullNameTF" GridPane.columnIndex="3" />
-                              <TextField fx:id="addADonorNameTF" GridPane.columnIndex="1" />
-                              <Label text="Username" />
-                              <Label text="Email" GridPane.rowIndex="1" />
-                              <Label text="Phone" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <TextField fx:id="addADonorEmailTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="addADonorPhoneTF" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#addADonor" text="Add" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                              <Label text="Full Name" />
+                              <TextField fx:id="addADonorFullNameTF" GridPane.columnIndex="1" />
+                              <Label text="Email" GridPane.columnIndex="2" />
+                              <Label text="Phone" GridPane.rowIndex="1" />
+                              <TextField fx:id="addADonorEmailTF" GridPane.columnIndex="3" />
+                              <TextField fx:id="addADonorPhoneTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#addADonor" text="Add" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints halignment="CENTER" maxWidth="101.0" minWidth="64.0" prefWidth="90.0" />
@@ -322,7 +320,6 @@
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
                            </columnConstraints>
                            <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                            </rowConstraints>

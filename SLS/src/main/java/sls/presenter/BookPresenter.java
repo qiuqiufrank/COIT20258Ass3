@@ -155,10 +155,10 @@ public class BookPresenter {
     public void searchBooksByDonor(Donor donor) {
         List<Book> books = bookModel.searchBooksByDonor(donor.getId());
         if (books.size() > 0) {
-            mainView.appendTextArea("\nGet all books donated by " + donor.getName() + ", found " + books.size() + " books:");
+            mainView.appendTextArea("\nGet all books donated by " + donor.getFullName()+ ", found " + books.size() + " books:");
             mainView.appendTextArea(booksToString(books));
         } else {
-            mainView.appendTextArea("\n" + donor.getName() + " did not donate any book");
+            mainView.appendTextArea("\n" + donor.getFullName()+ " did not donate any book");
         }
     }
 

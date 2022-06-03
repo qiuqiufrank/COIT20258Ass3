@@ -40,8 +40,8 @@ public class DonorModel implements IDonorModel {
 
             //Define PreparedStatments
             addDonorStatement = connection.prepareStatement(
-                    "INSERT INTO Donor(Name ,FullName ,Email ,PhoneNumber ) VALUES"
-                    + "(?,?,?,?)", Statement.RETURN_GENERATED_KEYS
+                    "INSERT INTO Donor(FullName ,Email ,PhoneNumber ) VALUES"
+                    + "(?,?,?)", Statement.RETURN_GENERATED_KEYS
             );
             allDonorsStatement = connection.prepareStatement(
                     "SELECT * FROM Donor"
@@ -63,20 +63,20 @@ public class DonorModel implements IDonorModel {
      * returns it as a object
      */
     @Override
-    public Donor addNewDonor(String name, String fullName, String email, String phone) {
+    public Donor addNewDonor( String fullName, String email, String phone) {
         try {
             //Set Parameters for the PreparedStatement
-            addDonorStatement.setString(1, name);
-            addDonorStatement.setString(2, fullName);
-            addDonorStatement.setString(3, email);
-            addDonorStatement.setString(4, phone);
+  
+            addDonorStatement.setString(1, fullName);
+            addDonorStatement.setString(2, email);
+            addDonorStatement.setString(3, phone);
             addDonorStatement.executeUpdate();
 
             ResultSet generatedKeys = addDonorStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
                 return null;
             }
-            Donor donor = new Donor(name, fullName, email, phone);
+            Donor donor = new Donor( fullName, email, phone);
 
             donor.setId(generatedKeys.getLong(1));
 
@@ -97,7 +97,7 @@ public class DonorModel implements IDonorModel {
         try (ResultSet resultSet = allDonorsStatement.executeQuery()) {
             List<Donor> results = new ArrayList<Donor>();
             while (resultSet.next()) {
-                Donor donor = new Donor(resultSet.getString("Name"), resultSet.getString("FullName"),
+                Donor donor = new Donor( resultSet.getString("FullName"),
                         resultSet.getString("Email"), resultSet.getString("PhoneNumber"));
                 donor.setId(resultSet.getLong("Id"));
                 results.add(donor);

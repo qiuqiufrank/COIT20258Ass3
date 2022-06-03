@@ -70,8 +70,7 @@ public class MainView implements Initializable, IMainView {
     @FXML
     private TextField searchBooksByTitleTF;
 
-    @FXML
-    private TextField addADonorNameTF;
+
     @FXML
     private TextField addADonorFullNameTF;
     @FXML
@@ -413,10 +412,10 @@ public class MainView implements Initializable, IMainView {
     @FXML
     void addADonor(ActionEvent e) {
 
-        if (isEmpty(addADonorNameTF) || isEmpty(addADonorFullNameTF) || isEmpty(addADonorEmailTF) || isEmpty(addADonorPhoneTF)) {
+        if ( isEmpty(addADonorFullNameTF) || isEmpty(addADonorEmailTF) || isEmpty(addADonorPhoneTF)) {
             return;
         }
-        donorPresenter.addADonor(addADonorNameTF.getText(), addADonorFullNameTF.getText(), addADonorEmailTF.getText(), addADonorPhoneTF.getText());
+        donorPresenter.addADonor(addADonorFullNameTF.getText(), addADonorEmailTF.getText(), addADonorPhoneTF.getText());
     }
 
     /**
@@ -576,19 +575,15 @@ public class MainView implements Initializable, IMainView {
         cb.setConverter(new StringConverter<Donor>() {
             @Override
             public String toString(Donor object) {
-                return object.getFullName() + ":" + object.getName();
+                return object.getFullName();
             }
 
             @Override
             public Donor fromString(String string) {
-                String vs[] = string.split(":");
-                if (vs.length != 2) {
-                    return null;
-                }
-                String fullName =vs[0];
-                String userName=vs[1];
+     
+                String fullName =string;
                 return donors.stream().filter(ap
-                        -> ap.getFullName()== fullName&& ap.getName()==userName ).findFirst().orElse(null);
+                        -> ap.getFullName()== fullName ).findFirst().orElse(null);
             }
         });
     }

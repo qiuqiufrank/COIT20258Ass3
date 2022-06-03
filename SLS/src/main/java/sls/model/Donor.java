@@ -13,14 +13,12 @@ package sls.model;
 public class Donor {
 
     private Long id;
-    private String name;
     private String fullName;
     private String email;
     private String phone;
 
-    public Donor(String name, String fullName, String email, String phone) {
+    public Donor( String fullName, String email, String phone) {
         this.fullName = fullName;
-        this.name = name;
         this.email = email;
         this.phone = phone;
     }
@@ -41,13 +39,7 @@ public class Donor {
         this.fullName = fullName;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getEmail() {
         return email;
@@ -67,7 +59,7 @@ public class Donor {
 
     @Override
     public String toString() {
-        return String.format("Donor id:%d, name:%s, full name:%s, email:%s, phone number:%s", id,name,fullName,email,phone);
+        return String.format("Donor id:%d, full name:%s, email:%s, phone number:%s", id,fullName,email,phone);
     }
     
 

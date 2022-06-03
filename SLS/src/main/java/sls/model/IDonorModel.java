@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface IDonorModel {
 
-    public Donor addNewDonor(String name, String fullName, String email, String phone);
+    public Donor addNewDonor( String fullName, String email, String phone);
     public List<Donor> getAllDonors() ;
 }

@@ -43,9 +43,9 @@ public class DonorPresenter {
  * @param phone 
  * This will add a donor with all the details
  */
-    public void addADonor(String name, String fullName, String email, String phone) {
+    public void addADonor( String fullName, String email, String phone) {
 
-        Donor donor = donorModel.addNewDonor(name, fullName, email, phone);
+        Donor donor = donorModel.addNewDonor(fullName, email, phone);
         if (donor == null) {
             mainView.appendTextArea("\nAdding a donor failed");
         } else {
@@ -76,12 +76,12 @@ public class DonorPresenter {
         DonationRecord dr = donationRecordModel.donateBooks(donor.getId(), book.getId(), copies, donationDate);
 
         if (dr == null) {
-            mainView.appendTextArea("\nFailed to donate Book:" + book.getTitle() + " donated by " + donor.getName());
+            mainView.appendTextArea("\nFailed to donate Book:" + book.getTitle() + " donated by " + donor.getFullName());
         } else {
             book.setCopies(book.getCopies() + copies);
             Book nbook = bookModel.updateCopiesCount(book);
             if (nbook!=null) {
-                mainView.appendTextArea("\nSucceeded to donate Book:" + nbook.getTitle() + " donated by" + donor.getName() + ":");
+                mainView.appendTextArea("\nSucceeded to donate Book:" + nbook.getTitle() + " donated by" + donor.getFullName() + ":");
                 mainView.appendTextArea(dr.toString());
             }
 
